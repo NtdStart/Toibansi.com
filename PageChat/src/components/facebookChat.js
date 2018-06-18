@@ -4,21 +4,16 @@ import {OrderedMap} from 'immutable'
 import _ from 'lodash'
 import {ObjectID} from '../helpers/objectid'
 import UserBar from './user-bar'
-import CallFacebookAPI from "../services/CallFacebookAPI";
 
 
-export default class Messenger extends Component {
+export default class FacebookChat extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             height: window.innerHeight,
             messages: new OrderedMap(),
-            newMessage: 'Hello there...',
-            searchUser: "",
-            showSearchUser: false,
         }
-        this.CallFacebookAPI = new CallFacebookAPI();
         this._onResize = this._onResize.bind(this);
         this.handleSend = this.handleSend.bind(this);
         this.renderMessage = this.renderMessage.bind(this);
@@ -55,13 +50,13 @@ export default class Messenger extends Component {
 
     handleSend() {
         const {newMessage} = this.state;
-        const {store} = this.props;
+        const {facebookChat} = this.props;
         // create new message
         if (_.trim(newMessage).length) {
             const messageId = new ObjectID().toString();
-            const channel = store.getActiveConversation();
+            const channel = facebookChat.getActiveConversation();
             const channelId = _.get(channel, '_id', null);
-            const currentUser = store.getCurrentUser();
+            const currentUser = facebookChat.getCurrentUser();
             const message = {
                 _id: messageId,
                 channelId: channelId,
@@ -69,7 +64,7 @@ export default class Messenger extends Component {
                 userId: _.get(currentUser, '_id'),
                 me: true,
             };
-            store.addMessage(messageId, message);
+            facebookChat.addMessage(messageId, message);
             this.setState({
                 newMessage: '',
             })
@@ -84,25 +79,25 @@ export default class Messenger extends Component {
 
     componentDidUpdate() {
         // this.getDataMess();
-        console.log('Component DID Update!')
         this.scrollMessagesToBottom();
     }
 
     componentWillUpdate() {
-        console.log('Component Will Update!')
     }
 
-    getDataMessages() {
-        this.time_out = setTimeout(() => {
-            const {store} = this.props;
-            const messages = store.getMessages();
-            if (messages.size > 0)
-                this.setState({
-                    messages: messages
-                });
-        }, 2000)
+    getDataMess() {
+        const {facebookChat} = this.props;
+        const messages = facebookChat.getMessages();
+        if (messages.size > 0)
+            this.setState({
+                messages: messages
+            });
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.getDataMess();
+        console.log('Component Will Receive Props!')
+    }
 
     componentDidMount() {
         console.log('Component DID MOUNT!')
@@ -116,27 +111,21 @@ export default class Messenger extends Component {
 
 
     render() {
-        const {store} = this.props;
+        const {facebookChat} = this.props;
         const {height} = this.state;
         const style = {
             height: height,
         };
-        const activeChannel = store.getActiveConversation();
-        const conversations = store.getConversations();
+        const activeChannel = facebookChat.getActiveConversation();
+        const conversations = facebookChat.getConversations();
         return (
             <div style={style} className="app-messenger">
                 <div className="header">
-                    <div className="left">
-                        <button className="left-action"><i className="icon-settings-streamline-1"/></button>
-                        <button onClick={this._onAddToFirst} className="right-action"><i
-                            className="icon-edit-modify-streamline"/></button>
-                        <h2>Chat Lists</h2>
-                    </div>
                     <div className="content">
                         {this.renderTitle(activeChannel)}
                     </div>
                     <div className="right">
-                        <UserBar store={store}/>
+                        <UserBar facebookChat={facebookChat}/>
                     </div>
                 </div>
                 <div className="main">
@@ -145,7 +134,7 @@ export default class Messenger extends Component {
                             {conversations.map((conversation, key) => {
                                 return (
                                     <div onClick={(key) => {
-                                        store.setActiveConversation(conversation._id);
+                                        facebookChat.setActiveConversation(conversation._id);
                                     }} key={conversation._id}
                                          className={classNames('chanel', {'notify': _.get(conversation, 'notify') === true}, {'active': _.get(activeChannel, '_id') === _.get(conversation, '_id', null)})}>
                                         <div className="user-image">

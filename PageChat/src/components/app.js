@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import ConversationController from '../controller/ConverstationController'
-import Messenger from './messenger'
+import FacebookChat from './facebookChat'
 
 export default class App extends Component {
 
@@ -14,7 +14,7 @@ export default class App extends Component {
     render() {
         const {ConversationController} = this.state;
         return <div className="app-wrapper">
-            <Messenger store={ConversationController}/>
+            <FacebookChat facebookChat={ConversationController}/>
         </div>
     }
 }

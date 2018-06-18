@@ -12,7 +12,9 @@ export default class ConversationController {
         this.app = appComponent;
         this.service = new Service();
         this.callFacebookAPI = new CallFacebookAPI();
+
         // this.activeChannelId = 't_100025206424382';
+
         this.activeChannelId = null;
         this.token = this.getTokenFromLocalStore();
         this.user = this.getUserFromLocalStorage();
@@ -23,10 +25,8 @@ export default class ConversationController {
         this.realtime = new Realtime(this);
         this.conversations = new OrderedMap();
         this.converstation = new ConversationModel(this);
-
         this.messages = new OrderedMap();
         this.message = new MessageModel(this);
-
         this.fetchConversations();
     }
 
@@ -52,15 +52,10 @@ export default class ConversationController {
     }
 
     addUserToCache(user) {
-
         user.avatar = this.loadUserAvatar(user);
         const id = _.toString(user._id);
         this.users = this.users.set(id, user);
-
-
         return user;
-
-
     }
 
     getUserTokenId() {
@@ -68,7 +63,6 @@ export default class ConversationController {
     }
 
     loadUserAvatar(user) {
-
         return `https://api.adorable.io/avatars/100/${user._id}.png`
     }
 
@@ -372,46 +366,27 @@ export default class ConversationController {
         return this.user;
     }
 
-
     fetchChannelMessages(channelId) {
-
-
         let channel = this.conversations.get(channelId);
-
         if (channel && !_.get(channel, 'isFetchedMessages')) {
-
-            const token = _.get(this.token, '_id');//this.token._id;
+            const token = _.get(this.token, '_id');
+            //this.token._id;
             const options = {
                 headers: {
                     authorization: token,
                 }
             }
-
             this.service.get(`api/channels/${channelId}/messages`, options).then((response) => {
-
-
                 channel.isFetchedMessages = true;
-
                 const messages = response.data;
-
                 _.each(messages, (message) => {
-
                     this.realtime.onAddMessage(message);
-
                 });
-
-
                 this.conversations = this.conversations.set(channelId, channel);
-
-
             }).catch((err) => {
-
                 console.log("An error fetching channel 's messages", err);
             })
-
-
         }
-
     }
 
     setActiveConversation(id) {
@@ -432,36 +407,28 @@ export default class ConversationController {
         return channel;
     }
 
-
     getActiveChannelId() {
         return this.activeChannelId;
     }
 
     setMessage(message, notify = false) {
-
         const id = _.toString(_.get(message, '_id'));
         this.messages = this.messages.set(id, message);
         const channelId = _.toString(message.channelId);
         const channel = this.conversations.get(channelId);
-
         if (channel) {
             channel.messages = channel.messages.set(id, true);
             channel.lastMessage = _.get(message, 'body', '');
             channel.notify = notify;
             this.conversations = this.conversations.set(channelId, channel);
         } else {
-
             // fetch to the server with channel info
             this.service.get(`api/channels/${channelId}`).then((response) => {
-
                 const channel = _.get(response, 'data');
-
                 /*const users = _.get(channel, 'users');
                 _.each(users, (user) => {
-
                     this.addUserToCache(user);
                 });*/
-
                 this.realtime.onAddChannel(channel);
             })
         }

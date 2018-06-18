@@ -2,10 +2,10 @@ import axios from 'axios'
 import {apiUrlFb} from '../config/config'
 
 const pageId50k = '598135600563114';
-const limit = '20';
+const limit = '8';
 const fields = '?fields=can_reply,id,snippet,senders';
 
-const access_token = 'EAACEdEose0cBAOog3vPVkC8ZAnZBgGAZAFDmYnjRSeZBOY99EEGvfQ9UZA1BaQbzCHs7U69ZAl8WabCPLqRcZCTXYRMTpTZCoCQOmeSQNE8et8TvpIwQ7CUIX35tFopYNu2pUsyofRAs7CyO6Bl4GVswzksKu1ErkhjH7JGoK19HDbAw8bViZBu3ryQsyjnnZCjkzPg1f3isnL5QZDZD';
+const access_token = 'EAACEdEose0cBAISzh4lUDlMQIqLleS9kZASzklX4U9iP8du3ydh7hTDeE5qV4aZBrhZAYkzibLiFZAcDqDyuvqqREZChYPKqcB8ZBRYw8sKiGcGlen3rrMi5WrGP4qUnBXtbHDJF5AARGsGwtuZCZB2OAJ0RHcfwZBjcG0rLqdbAZCzUE0mDeU5U7ST1chXHxQIsbZBW3kuq5dGbgZDZD';
 
 
 export default class CallFacebookAPI {
@@ -18,7 +18,7 @@ export default class CallFacebookAPI {
 
 
     getMessage(conversationId, options = null) {
-        const endpoint = 'messages?fields=created_time,message,from,to,attachments{image_data,mime_type,name,size,video_data,file_url,id},sticker,id,tags,shares&limit=10&access_token=' + access_token;
+        const endpoint = 'messages?fields=created_time,message,from,to,attachments{image_data,mime_type,name,size,video_data,file_url,id},sticker,id,tags,shares&limit=5&access_token=' + access_token;
         const url = `${apiUrlFb}/${conversationId}/${endpoint}`;
         return axios.get(url, options);
     }

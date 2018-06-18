@@ -19,12 +19,10 @@ export default class UserBar extends Component {
     }
 
     render() {
-
-        const {store} = this.props;
-
-        const me = store.getCurrentUser();
+        const {facebookChat} = this.props;
+        const me = facebookChat.getCurrentUser();
         const profilePicture = _.get(me, 'avatar');
-        const isConnected = store.isConnected();
+        const isConnected = facebookChat.isConnected();
 
         return (
             <div className="user-bar">
@@ -52,11 +50,11 @@ export default class UserBar extends Component {
                         showUserForm: false,
                     })
 
-                }} store={store}/> : null}
+                }} facebookChat={facebookChat}/> : null}
 
 
                 {this.state.showUserMenu ? <UserMenu
-                    store={store}
+                    facebookChat={facebookChat}
                     onClose={() => {
 
                         this.setState({
