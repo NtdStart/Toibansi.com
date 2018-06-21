@@ -1,12 +1,13 @@
 import axios from 'axios'
 import {apiUrlFb} from '../config/config'
 
-const pageId50k = '442408382863034';
+// const pageId50k = '442408382863034';
 // const pageId50k = '158757974724465';
+const pageId50k = '598135600563114';
 const limit = '15';
 const fields = '?fields=can_reply,id,snippet,senders';
 
-const access_token = 'EAACEdEose0cBANNOU0YtUVXww2MyrszjCwrsYYGdQQvQ0jot27ZCn0vQVWoHZBrBxSZBp1LG4AN5JhmQ87Y6ZBoQKm1udJ9ORxj0BCag8FZBmgZAktWrsf4l71x4sDbwdEBCUjhxFhwW6tqfPO9VqQqu69D8o0N51qDhgfshcjVBkPzUxjQiDbewQBrZBLKeiRirdSMlirhAgZDZD';
+const access_token = 'EAACEdEose0cBADwAVNo9rHrSZCYqZBcq2C5fvZAEJpZCZAwKoJBrY6OGtztLabaJht2BDGydr9TtylxtACKD0KCLLitf8imNwL45gXXEGb70vkZBFqcEL79K7s8BSOlzK1DgQ7fkoxkRk0IBZCJO5OAeQn2LWHMLuaTJtXo9gZAEseuJV5vyAbl1irbxtnehPX8VdZBWTEgBdAgZDZD';
 
 
 export default class CallFacebookAPI {
