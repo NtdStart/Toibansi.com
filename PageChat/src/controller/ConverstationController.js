@@ -520,7 +520,7 @@ export default class ConversationController {
                 this.isLoading = false;
                 if (type==='FBMessage') {
                     this.nextMessage = (response.data.paging.next)? response.data.paging.cursors.after : null;
-                } else {
+                } else if (response.data.comment_count>0) {
                     this.nextMessage = (response.data.comments.paging.next)? response.data.comments.paging.cursors.after : null;
                 }
                 let messages = [];
