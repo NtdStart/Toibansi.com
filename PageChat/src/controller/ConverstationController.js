@@ -13,9 +13,6 @@ export default class ConversationController {
         this.app = appComponent;
         this.service = new Service();
         this.callFacebookAPI = new CallFacebookAPI();
-
-        // this.activeChannelId = 't_100025206424382';
-
         this.activeChannelId = null;
         this.activeChannelType = null;
         this.token = this.getTokenFromLocalStore();
@@ -31,6 +28,7 @@ export default class ConversationController {
         this.comments = new OrderedMap();
         this.comment = new CommentModel(this);
         this.message = new MessageModel(this);
+        this.message.mine = this.callFacebookAPI.getPageId();
         this.nextConversation = null;
         this.nextMessage = null;
         this.isLoading = false;
@@ -520,7 +518,11 @@ export default class ConversationController {
             let req = (type==='FBMessage')? this.callFacebookAPI.getMessage(activeChannel, this.nextMessage, null) : this.callFacebookAPI.getReplyComment(activeChannel, this.nextMessage, null);
             req.then((response) => {
                 this.isLoading = false;
-                this.nextMessage = (response.data.paging.next)? response.data.paging.cursors.after : null;
+                if (type==='FBMessage') {
+                    this.nextMessage = (response.data.paging.next)? response.data.paging.cursors.after : null;
+                } else {
+                    this.nextMessage = (response.data.comments.paging.next)? response.data.comments.paging.cursors.after : null;
+                }
                 let messages = [];
                 if (type==='FBComment') {
                     const res = response.data;
@@ -564,9 +566,9 @@ export default class ConversationController {
         return this.conversations.valueSeq();
     }
 
-    refeshMessages() {
-        console.log(this.messages);
-        this.messages = new OrderedMap();
+    resetCursor() {
+        this.nextConversation = null;
+        this.nextMessage = null;
     }
 
     update() {

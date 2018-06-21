@@ -2,6 +2,7 @@ export default class MessagesModel {
 
     constructor(mess) {
         this.mess = mess;
+        this.mine = null;
     }
 
     onAdd(payload, type) {
@@ -35,10 +36,7 @@ export default class MessagesModel {
     }
 
     checkMe(from_id) {
-        var me;
-        from_id === '442408382863034' ? me = true : me = false;
-        // from_id === '158757974724465' ? me = true : me = false;
-        return me;
+        return this.mine === from_id;
     }
 
     send(msg = {}) {
