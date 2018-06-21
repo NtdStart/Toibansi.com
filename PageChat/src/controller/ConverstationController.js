@@ -5,6 +5,7 @@ import CallFacebookAPI from '../services/CallFacebookAPI'
 import MessageModel from '../model/MesagesModel'
 import Realtime from '../realtime/realtime'
 import ConversationModel from '../model/ConversationModel'
+import CommentModel from '../model/CommentModel'
 
 
 export default class ConversationController {
@@ -16,6 +17,7 @@ export default class ConversationController {
         // this.activeChannelId = 't_100025206424382';
 
         this.activeChannelId = null;
+        this.activeChannelType = null;
         this.token = this.getTokenFromLocalStore();
         this.user = this.getUserFromLocalStorage();
         this.users = new OrderedMap();
@@ -26,8 +28,13 @@ export default class ConversationController {
         this.conversations = new OrderedMap();
         this.converstation = new ConversationModel(this);
         this.messages = new OrderedMap();
+        this.comments = new OrderedMap();
+        this.comment = new CommentModel(this);
         this.message = new MessageModel(this);
-        this.fetchConversations();
+        this.nextConversation = null;
+        this.nextMessage = null;
+        this.isLoading = false;
+        this.fetchConversationAndComment();
     }
 
     isConnected() {
@@ -35,21 +42,54 @@ export default class ConversationController {
     }
 
     fetchConversations() {
+        this.isLoading = true;
         const userToken = this.getUserTokenId();
         if (userToken) {
 
         } else {
-            this.callFacebookAPI.getConversations(null, null).then((response) => {
+            this.callFacebookAPI.getConversations(null, this.nextConversation, null).then((response) => {
+                this.nextConversation = (response.data.paging.next)? response.data.paging.cursors.after : null;
                 const channels = response.data.data;
                 _.each(channels, (c) => {
-                    this.converstation.onAdd(c);
+                    this.converstation.onAdd(c, 'inbox');
                 });
+                this.isLoading = false;
             }).catch((err) => {
                 console.log("An error fetching user conversations", err);
             })
 
         }
     }
+
+    fetchConversationAndComment() {
+        this.isLoading = true;
+        this.callFacebookAPI.get_conversation_comment(this.nextConversation,null).then((response) => {
+            this.nextConversation = (response.data.paging.next)? response.data.paging.cursors.after : null;
+            const channels = response.data.data;
+            _.each(channels, (c) => {
+                this.converstation.onAdd(c, 'inbox');
+            });
+            this.isLoading = false;
+        }).catch((err) => {
+            console.log("An error fetching user conversations", err);
+        })
+    }
+
+    fetchComments() {
+        this.isLoading = true;
+        this.callFacebookAPI.getComments(this.nextConversation,null).then((response) => {
+            this.nextConversation = (response.data.paging.next)? response.data.paging.cursors.after : null;
+            const channels = response.data.data;
+            _.each(channels, (c) => {
+                if (typeof c.comments !== 'undefined')
+                this.converstation.onAdd(c.comments, 'comment');
+            });
+            this.isLoading = false;
+        }).catch((err) => {
+            console.log("An error fetching user conversations", err);
+        })
+    }
+
 
     addUserToCache(user) {
         user.avatar = this.loadUserAvatar(user);
@@ -389,11 +429,14 @@ export default class ConversationController {
         }
     }
 
-    setActiveConversation(id) {
+    setActiveConversation(id, type) {
+        if (this.activeChannelId===id) return false;
         this.activeChannelId = id;
-        this.getMessagesFromConversation(id);
+        this.activeChannelType = type;
+        this.messages = new OrderedMap();
+        this.getMessagesFromConversation();
         this.update();
-        console.log("ActiveConversation Id ", id);
+        // console.log("ActiveConversation Id ", id);
     }
 
     getActiveConversation() {
@@ -467,15 +510,32 @@ export default class ConversationController {
         // console.log(JSON.stringify(this.messages.toJS()));
     }
 
-    getMessagesFromConversation(activeChannel) {
+    getMessagesFromConversation() {
+        this.isLoading = true;
+        let activeChannel = this.activeChannelId;
+        let type = this.activeChannelType;
         if (null == activeChannel) {
             return new OrderedMap();
         } else {
-            this.messages = new OrderedMap();
-            this.callFacebookAPI.getMessage(activeChannel, null).then((response) => {
-                const messages = response.data.data;
+            let req = (type==='FBMessage')? this.callFacebookAPI.getMessage(activeChannel, this.nextMessage, null) : this.callFacebookAPI.getReplyComment(activeChannel, this.nextMessage, null);
+            req.then((response) => {
+                this.isLoading = false;
+                this.nextMessage = (response.data.paging.next)? response.data.paging.cursors.after : null;
+                let messages = [];
+                if (type==='FBComment') {
+                    const res = response.data;
+                    messages = (res.comment_count>0)? response.data.comments.data : [];
+                    messages.push({
+                        id: res.id,
+                        created_time: res.created_time,
+                        from: res.from,
+                        message: res.message
+                    })
+                } else {
+                    messages = response.data.data;
+                }
                 _.each(messages, (mess) => {
-                    this.message.onAdd(mess);
+                    this.message.onAdd(mess, type);
                 });
                 return this.getMessages();
             }).catch((err) => {
@@ -485,7 +545,7 @@ export default class ConversationController {
     }
 
     getMessages() {
-        this.messages = this.messages.sort((a, b) => b.updated < a.updated);
+        this.messages = this.messages.sort((a, b) => b.created_time < a.created_time);
         return this.messages.valueSeq();
     }
 
@@ -502,6 +562,11 @@ export default class ConversationController {
     getConversations() {
         this.conversations = this.conversations.sort((a, b) => a.updated < b.updated);
         return this.conversations.valueSeq();
+    }
+
+    refeshMessages() {
+        console.log(this.messages);
+        this.messages = new OrderedMap();
     }
 
     update() {

@@ -13,7 +13,10 @@ export default class FacebookChat extends Component {
         this.state = {
             height: window.innerHeight,
             messages: new OrderedMap(),
+            activeTab: 1,
+            newMessage: ''
         }
+        this.firstPage = true;
         this._onResize = this._onResize.bind(this);
         this.handleSend = this.handleSend.bind(this);
         this.renderMessage = this.renderMessage.bind(this);
@@ -79,6 +82,7 @@ export default class FacebookChat extends Component {
 
     componentDidUpdate() {
         // this.getDataMess();
+        if (this.firstPage)
         this.scrollMessagesToBottom();
     }
 
@@ -96,23 +100,74 @@ export default class FacebookChat extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.getDataMess();
-        console.log('Component Will Receive Props!')
+        // console.log('Component Will Receive Props!')
     }
 
     componentDidMount() {
-        console.log('Component DID MOUNT!')
+        // console.log('Component DID MOUNT!')
         window.addEventListener('resize', this._onResize);
     }
 
     componentWillUnmount() {
-        console.log('Component WILL MOUNT!')
+        // console.log('Component WILL MOUNT!')
         window.removeEventListener('resize', this._onResize)
     }
 
+    handleScroll () {
+        const {facebookChat} = this.props;
+        let {offsetHeight, scrollHeight, scrollTop} = this.scroller;
+        if (scrollHeight > 0 && scrollHeight - offsetHeight - scrollTop < 50 && !facebookChat.isLoading && facebookChat.nextConversation!==null) {
+            switch (this.state.activeTab) {
+                case 1:
+                    facebookChat.fetchConversationAndComment();
+                    break;
+                case 2:
+                    facebookChat.fetchConversations();
+                    break;
+                case 3:
+                    facebookChat.fetchComments();
+                    break;
+                case 4:
+                    facebookChat.fetchComments();
+                    break;
+            }
+        }
+    }
+
+    handleScrollMessage() {
+        const {facebookChat} = this.props;
+        this.firstPage = false;
+        let {scrollTop} = this.messagesRef;
+        if (scrollTop < 50 && !facebookChat.isLoading && facebookChat.nextMessage!==null) {
+            facebookChat.getMessagesFromConversation();
+        }
+    }
+
+    setActiveTab(type) {
+        if (this.state.activeTab === type) return false;
+        const {facebookChat} = this.props;
+        facebookChat.conversations = new OrderedMap();
+        switch (type) {
+            case 1:
+                facebookChat.fetchConversationAndComment();
+                break;
+            case 2:
+                facebookChat.fetchConversations();
+                break;
+            case 3:
+                facebookChat.fetchComments();
+                break;
+            case 4:
+                facebookChat.fetchComments();
+                break;
+        }
+        this.firstPage = true;
+        this.setState({activeTab: type})
+    }
 
     render() {
         const {facebookChat} = this.props;
-        const {height} = this.state;
+        const {height, activeTab} = this.state;
         const style = {
             height: height,
         };
@@ -130,11 +185,49 @@ export default class FacebookChat extends Component {
                 </div>
                 <div className="main">
                     <div className="sidebar-left">
-                        <div className="chanels">
+                        <div className="fb-wrap-bar-search">
+                            <div className="fb-chat-action-bar">
+                                <div className="fb-chat-menu">
+                                    <div className={classNames("menu-icon", {"active": activeTab===1})} onClick={() => this.setActiveTab(1)}>
+                                        <i className="fa fa-inbox fa-2x"></i>
+                                    </div>
+                                    <div className={classNames("menu-icon", {"active": activeTab===2})}  onClick={() => this.setActiveTab(2)}>
+                                        <i className="far fa-envelope fa-2x"></i>
+                                    </div>
+                                    <div className={classNames("menu-icon", {"active": activeTab===3})} onClick={() => this.setActiveTab(3)}>
+                                        <i className="far fa-comment fa-2x"></i>
+                                    </div>
+                                    <div className={classNames("menu-icon", {"active": activeTab===4})} onClick={() => this.setActiveTab(4)}>
+                                        <i className="fa fa-eye-slash fa-2x"></i>
+                                    </div>
+                                    <div className="menu-icon drop-control dropdown">
+                                        <span className="dropdown-toggle" data-toggle="dropdown" role="button">
+                                            <i className="fa fa-bars fa-2x"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="search-conversation">
+                                <div className="flexbox-grid-default">
+                                    <div className="flexbox-auto-content">
+                                        <div className="wrap-search-input">
+                                            <span className="icon-search">
+                                                <i className="fas fa-search"></i>
+                                            </span>
+                                            <input className="search-input" placeholder="Tìm kiếm"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="chanels"
+                            onScroll={this.handleScroll.bind(this)}
+                             ref = {(scroll) => this.scroller = scroll}
+                        >
                             {conversations.map((conversation, key) => {
                                 return (
                                     <div onClick={(key) => {
-                                        facebookChat.setActiveConversation(conversation._id);
+                                        facebookChat.setActiveConversation(conversation._id, conversation.type);
                                     }} key={conversation._id}
                                          className={classNames('chanel', {'notify': _.get(conversation, 'notify') === true}, {'active': _.get(activeChannel, '_id') === _.get(conversation, '_id', null)})}>
                                         <div className="user-image">
@@ -150,7 +243,7 @@ export default class FacebookChat extends Component {
                         </div>
                     </div>
                     <div className="content">
-                        <div ref={(ref) => this.messagesRef = ref} className="messages">
+                        <div ref={(ref) => this.messagesRef = ref} onScroll={this.handleScrollMessage.bind(this)} className="messages">
                             {this.state.messages.size > 0 ? this.state.messages.map((message, index) => {
                                 return (
                                     <div key={index} className={classNames('message', {'me': message.me})}>
@@ -175,7 +268,7 @@ export default class FacebookChat extends Component {
                                             }
                                         }} onChange={(event) => {
                                             this.setState({newMessage: _.get(event, 'target.value')});
-                                        }} value="" placeholder=" Nhập câu trả lời ... "/>
+                                        }} value={this.state.newMessage} placeholder=" Nhập câu trả lời ... "/>
                             </div>
                             <div className="actions">
                                 <button onClick={this.handleSend} className="send">Send</button>

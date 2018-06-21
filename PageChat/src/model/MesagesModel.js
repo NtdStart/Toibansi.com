@@ -4,8 +4,7 @@ export default class MessagesModel {
         this.mess = mess;
     }
 
-
-    onAdd(payload) {
+    onAdd(payload, type) {
         const id = `${payload.id}`;
         const created_time = `${payload.created_time}`;
         const mess = `${payload.message}`;
@@ -13,8 +12,8 @@ export default class MessagesModel {
         const from_id = `${payload.from.id}`;
         const from_avatar = 'https://graph.facebook.com/' + from_id + '/picture?width=70&height=70';
         // const tags = `${payload.tags}`;
-        const to_name = `${payload.to.data[0].name}`;
-        const to_id = `${payload.to.data[0].id}`;
+        const to_name = (typeof payload.to!=='undefined')? `${payload.to.data[0].name}` : '';
+        const to_id = (typeof payload.to!=='undefined')? `${payload.to.data[0].id}` : '';
         const to_avatar = 'https://graph.facebook.com/' + to_id + '/picture?width=70&height=70';
         const me = this.checkMe(from_id);
 
@@ -37,7 +36,8 @@ export default class MessagesModel {
 
     checkMe(from_id) {
         var me;
-        from_id === '598135600563114' ? me = true : me = false;
+        from_id === '442408382863034' ? me = true : me = false;
+        // from_id === '158757974724465' ? me = true : me = false;
         return me;
     }
 
