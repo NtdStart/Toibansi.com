@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import ConversationController from '../../controller/ConverstationController'
 import FacebookChat from './facebookChat'
-import {collapsiblesidebar} from "../../statics/js/main";
+import {collapsiblesidebar} from "../../helpers/collapsiblesidebar";
 
 export default class App extends Component {
 
