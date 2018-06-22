@@ -225,7 +225,7 @@ export default class FacebookChat extends Component {
                         </div>
                         <div className="sidebar-collap-right">
                         </div>
-                        <div className="clearfix"></div>
+                        <div className="clearfix"/>
                     </ul>
                 </nav>
 
@@ -323,6 +323,9 @@ export default class FacebookChat extends Component {
                         </div>
                     </div>
                     <div className="content">
+                        <div className="conversation-tags">
+                            <i className="fa fa-tags"></i>
+                        </div>
                         <div ref={(ref) => this.messagesRef = ref} onScroll={this.handleScrollMessage.bind(this)}
                              className="messages">
                             {this.state.messages.size > 0 ? this.state.messages.map((message, index) => {
@@ -337,7 +340,17 @@ export default class FacebookChat extends Component {
                             }) : null}
                         </div>
 
+
                         {<div className="messenger-input">
+                            <div className="facebook tags">
+                                <div className="item">Đã tạo</div>
+                                <div className="item">Bỏ qua</div>
+                                <div className="item">Boom</div>
+                                <a title="Quản lý nhãn">
+                                    <i className="fa fa-plus"></i>
+                                </a>
+                            </div>
+                            <div className="clearfix"/>
                             <div className="text-input">
 										<textarea className="form-control" onKeyUp={(event) => {
                                             if (event.key === 'Enter' && !event.shiftKey) {
@@ -348,7 +361,7 @@ export default class FacebookChat extends Component {
                                         }} value={this.state.newMessage} placeholder=" Nhập câu trả lời ... "/>
                             </div>
                             <div className="actions">
-                                <button onClick={this.handleSend} className="send">Send</button>
+                                <button onClick={this.handleSend} className="btn btn-info">Send</button>
                             </div>
                         </div>}
 

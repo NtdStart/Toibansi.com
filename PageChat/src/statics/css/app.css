@@ -157,7 +157,7 @@ body {
 }
 
 .app-messenger .main .sidebar-left {
-    width: 330px;
+    width: 360px;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
@@ -183,8 +183,7 @@ body {
 
 .app-messenger .main .content .messenger-input {
     border-top: 1px solid #ebeef0 !important;
-    height: 160px;
-    display: flex;
+    height: 200px;
     flex-direction: row;
 }
 
@@ -291,13 +290,13 @@ textarea.form-control {
 
 .chanels {
     overflow-y: auto;
-    height: 80%;
+    height: 100%;
 }
 
 .chanels .chanel {
     cursor: pointer;
     display: flex;
-    padding: 8px;
+    padding: 7px;
     width: 100%;
     border-bottom: 1px solid #ebeef0 !important;
     height: 70px;
@@ -319,7 +318,7 @@ textarea.form-control {
 }
 
 .chanels .chanel .user-image {
-    width: 55px;
+    width: 80px;
 }
 
 .chanels .chanel .user-image img {
@@ -715,6 +714,7 @@ h2.title {
 
 .fb-chat-menu {
     display: flex;
+    font-size: 12px;
 }
 
 .fb-chat-menu div {
@@ -746,7 +746,7 @@ h2.title {
     color: #000;
     -webkit-appearance: none;
     -moz-appearance: none;
-    padding: 5px 20px;
+    padding: 5px 28px;
     border-radius: 3px;
     font-weight: 400;
     line-height: 24px;
@@ -764,10 +764,34 @@ h2.title {
 .icon-search {
     position: absolute;
     line-height: 24px;
-    padding: 5px 10px;
+    padding: 8px 10px;
+    color: #a0a0a0;
 }
 .fa-reply {
     font-weight: 900;
     opacity: 0.6;
     padding-right: 3px;
+}
+
+.conversation-tags{
+    font-size: 12px;
+    height: 39px;
+    padding: 5px 15px;
+    border-bottom: 1px solid #ebeef0!important;
+}
+
+.facebook.tags{
+    padding: 5px;
+    line-height: 25px;
+}
+
+.facebook.tags .item {
+    border: none;
+    display: inline-block;
+    padding: 0 5px!important;
+    font-size: 12px;
+    background: #cae9f7;
+    color: #005e94;
+    border-radius: 3px;
+    margin-left: 5px;
 }
