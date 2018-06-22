@@ -4,7 +4,6 @@ import {OrderedMap} from 'immutable'
 import _ from 'lodash'
 import {ObjectID} from '../../helpers/objectid'
 
-
 export default class FacebookChat extends Component {
 
     constructor(props) {
@@ -13,6 +12,8 @@ export default class FacebookChat extends Component {
             height: window.innerHeight,
             messages: new OrderedMap(),
             activeTab: 1,
+            pageId: '598135600563114',
+            pageName: '50K',
             newMessage: ''
         }
         this.firstPage = true;
@@ -26,6 +27,11 @@ export default class FacebookChat extends Component {
 
     renderAvatars(converstation) {
         return <img src={converstation.avatar} alt={converstation.senders}/>
+    }
+
+    renderAvatarPage() {
+        const url = 'https://graph.facebook.com/' + this.state.pageId + '/picture?width=70&height=70';
+        return <img className="img-circle" src={url} alt={this.state.pageName}/>
     }
 
 
@@ -184,6 +190,7 @@ export default class FacebookChat extends Component {
         this.setState({activeTab: type})
     }
 
+
     render() {
         const {facebookChat} = this.props;
         const {height, activeTab} = this.state;
@@ -203,34 +210,26 @@ export default class FacebookChat extends Component {
 
         return (
             <div style={style} className="app-messenger">
-                <div className="header">
-                    <button type="button" id="sidebarCollapse" className="btn btn-info">
-                        <i className="fas fa-align-left"></i>
-                        <span>Toggle Sidebar</span>
-                    </button>
-                    <button className="btn btn-dark d-inline-block d-lg-none ml-auto" type="button"
-                            data-toggle="collapse" data-target="#navbarSupportedContent"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i className="fas fa-align-justify"></i>
-                    </button>
-
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="nav navbar-nav ml-auto">
-                            <li className="nav-item active">
-                                <a className="nav-link" href="/">Page</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="/">Page</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="/">Page</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="/">Page</a>
-                            </li>
-                        </ul>
+                <div className="overlay"></div>
+                <nav id="sidebar">
+                    <div className="sidebar-header">
+                        <div id="dismiss">
+                            <i id="fa-align-right" className="fas fa-align-right"></i>
+                        </div>
                     </div>
+                    <ul className="list-unstyled components">
+                        <div className="sidebar-collap-left">
+                            <div className="page-avatar active">
+                                {this.renderAvatarPage()}
+                            </div>
+                        </div>
+                        <div className="sidebar-collap-right">
+                        </div>
+                        <div className="clearfix"></div>
+                    </ul>
+                </nav>
 
+                <div className="header">
                     <div className="content">
                         {this.renderTitle(activeChannel)}
                     </div>
@@ -358,6 +357,7 @@ export default class FacebookChat extends Component {
 
                     </div>
                 </div>
+
             </div>
         )
     }

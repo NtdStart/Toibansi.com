@@ -70,6 +70,7 @@ body {
 }
 
 .app-messenger {
+    margin-left: 52px;
     display: flex;
     flex-direction: column;
 }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import ConversationController from '../../controller/ConverstationController'
 import FacebookChat from './facebookChat'
+import {collapsiblesidebar} from "../../statics/js/main";
 
 export default class App extends Component {
 
@@ -15,6 +16,7 @@ export default class App extends Component {
         const {ConversationController} = this.state;
         return <div className="app-wrapper">
             <FacebookChat facebookChat={ConversationController}/>
+            {collapsiblesidebar()}
         </div>
     }
 }
