@@ -16,8 +16,8 @@ export default class MessagesModel {
         const to_name = (typeof payload.to!=='undefined')? `${payload.to.data[0].name}` : '';
         const to_id = (typeof payload.to!=='undefined')? `${payload.to.data[0].id}` : '';
         const to_avatar = 'https://graph.facebook.com/' + to_id + '/picture?width=70&height=70';
+        const attachment = (typeof payload.attachment!=='undefined')? payload.attachment : null;
         const me = this.checkMe(from_id);
-
 
         let message = {
             _id: id,
@@ -29,6 +29,7 @@ export default class MessagesModel {
             to_name: to_name,
             to_id: to_id,
             to_avatar: to_avatar,
+            attachment: attachment,
             me: me,
         };
 

@@ -28,7 +28,7 @@ export default class ConversationController {
         this.comments = new OrderedMap();
         this.comment = new CommentModel(this);
         this.message = new MessageModel(this);
-        this.message.mine = this.callFacebookAPI.getPageId();
+        this.converstation.pageId = this.message.mine = this.callFacebookAPI.getPageId();
         this.nextConversation = null;
         this.nextMessage = null;
         this.isLoading = false;
@@ -45,7 +45,7 @@ export default class ConversationController {
         if (userToken) {
 
         } else {
-            this.callFacebookAPI.getConversations(null, this.nextConversation, null).then((response) => {
+            this.callFacebookAPI.getConversations(this.nextConversation, null).then((response) => {
                 this.nextConversation = (response.data.paging.next)? response.data.paging.cursors.after : null;
                 const channels = response.data.data;
                 _.each(channels, (c) => {
@@ -431,6 +431,7 @@ export default class ConversationController {
         if (this.activeChannelId===id) return false;
         this.activeChannelId = id;
         this.activeChannelType = type;
+        this.resetCursor();
         this.messages = new OrderedMap();
         this.getMessagesFromConversation();
         this.update();
@@ -527,12 +528,19 @@ export default class ConversationController {
                 if (type==='FBComment') {
                     const res = response.data;
                     messages = (res.comment_count>0)? response.data.comments.data : [];
-                    messages.push({
+                    let item = {
                         id: res.id,
                         created_time: res.created_time,
                         from: res.from,
                         message: res.message
-                    })
+                    };
+                    if (typeof res.attachment!=='undefined') {
+                        item['attachment'] = {
+                            type: res.attachment.type,
+                            media: res.attachment.media
+                        }
+                    }
+                    messages.push(item)
                 } else {
                     messages = response.data.data;
                 }
@@ -547,7 +555,7 @@ export default class ConversationController {
     }
 
     getMessages() {
-        this.messages = this.messages.sort((a, b) => b.created_time < a.created_time);
+        this.messages = this.messages.sort((a, b) => a.created_time > b.created_time);
         return this.messages.valueSeq();
     }
 
@@ -562,8 +570,8 @@ export default class ConversationController {
     }
 
     getConversations() {
-        this.conversations = this.conversations.sort((a, b) => a.updated < b.updated);
-        return this.conversations.valueSeq();
+        this.conversations = this.conversations.sort((a, b) => a.unix_time < b.unix_time);
+        return this.conversations.valueSeq().toArray();
     }
 
     resetCursor() {

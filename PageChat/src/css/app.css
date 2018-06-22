@@ -156,7 +156,7 @@ body {
 }
 
 .app-messenger .main .sidebar-left {
-    width: 300px;
+    width: 330px;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
@@ -764,4 +764,9 @@ h2.title {
     position: absolute;
     line-height: 24px;
     padding: 5px 10px;
+}
+.fa-reply {
+    font-weight: 900;
+    opacity: 0.6;
+    padding-right: 3px;
 }
