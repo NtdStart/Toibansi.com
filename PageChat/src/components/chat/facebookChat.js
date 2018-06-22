@@ -43,19 +43,20 @@ export default class FacebookChat extends Component {
     }
 
     renderMessage(message) {
-        if (message.attachment==null)
-        return (
-            <div className="message-body">
-                <div className="message-text">
-                    {message.message}
+        if (message.attachment == null)
+            return (
+                <div className="message-body">
+                    <div className="message-text">
+                        {message.message}
+                    </div>
                 </div>
-            </div>
-        )
+            )
         else {
             return (
                 <div className="message-body">
                     <div className="message-text">
-                        <img src={message.attachment.media.image.src} height={message.attachment.media.image.height} width={message.attachment.media.image.width} alt=""/>
+                        <img src={message.attachment.media.image.src} height={message.attachment.media.image.height}
+                             width={message.attachment.media.image.width} alt=""/>
                     </div>
                 </div>
             )
@@ -94,7 +95,7 @@ export default class FacebookChat extends Component {
     componentDidUpdate() {
         // this.getDataMess();
         if (this.firstPage)
-        this.scrollMessagesToBottom();
+            this.scrollMessagesToBottom();
     }
 
     componentWillUpdate() {
@@ -124,10 +125,10 @@ export default class FacebookChat extends Component {
         window.removeEventListener('resize', this._onResize)
     }
 
-    handleScroll () {
+    handleScroll() {
         const {facebookChat} = this.props;
         let {offsetHeight, scrollHeight, scrollTop} = this.scroller;
-        if (scrollHeight > 0 && scrollHeight - offsetHeight - scrollTop < 50 && !facebookChat.isLoading && facebookChat.nextConversation!==null) {
+        if (scrollHeight > 0 && scrollHeight - offsetHeight - scrollTop < 50 && !facebookChat.isLoading && facebookChat.nextConversation !== null) {
             switch (this.state.activeTab) {
                 case 1:
                     facebookChat.fetchConversationAndComment();
@@ -141,6 +142,9 @@ export default class FacebookChat extends Component {
                 case 4:
                     facebookChat.fetchComments();
                     break;
+                default :
+                    facebookChat.fetchConversationAndComment();
+                    break;
             }
         }
     }
@@ -149,7 +153,7 @@ export default class FacebookChat extends Component {
         const {facebookChat} = this.props;
         this.firstPage = false;
         let {scrollTop} = this.messagesRef;
-        if (scrollTop < 50 && !facebookChat.isLoading && facebookChat.nextMessage!==null) {
+        if (scrollTop < 50 && !facebookChat.isLoading && facebookChat.nextMessage !== null) {
             facebookChat.getMessagesFromConversation();
         }
     }
@@ -172,6 +176,9 @@ export default class FacebookChat extends Component {
             case 4:
                 facebookChat.fetchComments();
                 break;
+            default :
+                facebookChat.fetchConversationAndComment();
+                break;
         }
         this.firstPage = true;
         this.setState({activeTab: type})
@@ -186,7 +193,7 @@ export default class FacebookChat extends Component {
         const activeChannel = facebookChat.getActiveConversation();
         const conversations = facebookChat.getConversations();
 
-        function renderIcon (reply) {
+        function renderIcon(reply) {
             if (reply) {
                 return (
                     <i className="fas fa-reply"></i>
@@ -197,6 +204,33 @@ export default class FacebookChat extends Component {
         return (
             <div style={style} className="app-messenger">
                 <div className="header">
+                    <button type="button" id="sidebarCollapse" className="btn btn-info">
+                        <i className="fas fa-align-left"></i>
+                        <span>Toggle Sidebar</span>
+                    </button>
+                    <button className="btn btn-dark d-inline-block d-lg-none ml-auto" type="button"
+                            data-toggle="collapse" data-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i className="fas fa-align-justify"></i>
+                    </button>
+
+                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul className="nav navbar-nav ml-auto">
+                            <li className="nav-item active">
+                                <a className="nav-link" href="/">Page</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/">Page</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/">Page</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/">Page</a>
+                            </li>
+                        </ul>
+                    </div>
+
                     <div className="content">
                         {this.renderTitle(activeChannel)}
                     </div>
@@ -208,16 +242,20 @@ export default class FacebookChat extends Component {
                         <div className="fb-wrap-bar-search">
                             <div className="fb-chat-action-bar">
                                 <div className="fb-chat-menu">
-                                    <div className={classNames("menu-icon", {"active": activeTab===1})} onClick={() => this.setActiveTab(1)}>
+                                    <div className={classNames("menu-icon", {"active": activeTab === 1})}
+                                         onClick={() => this.setActiveTab(1)}>
                                         <i className="fa fa-inbox fa-2x"></i>
                                     </div>
-                                    <div className={classNames("menu-icon", {"active": activeTab===2})}  onClick={() => this.setActiveTab(2)}>
+                                    <div className={classNames("menu-icon", {"active": activeTab === 2})}
+                                         onClick={() => this.setActiveTab(2)}>
                                         <i className="far fa-envelope fa-2x"></i>
                                     </div>
-                                    <div className={classNames("menu-icon", {"active": activeTab===3})} onClick={() => this.setActiveTab(3)}>
+                                    <div className={classNames("menu-icon", {"active": activeTab === 3})}
+                                         onClick={() => this.setActiveTab(3)}>
                                         <i className="far fa-comment fa-2x"></i>
                                     </div>
-                                    <div className={classNames("menu-icon", {"active": activeTab===4})} onClick={() => this.setActiveTab(4)}>
+                                    <div className={classNames("menu-icon", {"active": activeTab === 4})}
+                                         onClick={() => this.setActiveTab(4)}>
                                         <i className="fa fa-eye-slash fa-2x"></i>
                                     </div>
                                     <div className="menu-icon drop-control dropdown">
@@ -241,8 +279,8 @@ export default class FacebookChat extends Component {
                             </div>
                         </div>
                         <div className="chanels"
-                            onScroll={this.handleScroll.bind(this)}
-                             ref = {(scroll) => this.scroller = scroll}
+                             onScroll={this.handleScroll.bind(this)}
+                             ref={(scroll) => this.scroller = scroll}
                         >
                             {conversations.map((conversation, key) => {
                                 return (
@@ -257,7 +295,7 @@ export default class FacebookChat extends Component {
                                             <p className="conversation-sender">{conversation.senders}</p>
                                             <span>
                                                 {renderIcon(conversation.last_reply)}
-                                                  {conversation.snippet}</span>
+                                                {conversation.snippet}</span>
                                         </div>
                                         <div className="chanel-info">
                                             <div>
@@ -267,7 +305,7 @@ export default class FacebookChat extends Component {
                                             <div>
                                                 {
                                                     function (type) {
-                                                        if (type=='FBMessage') {
+                                                        if (type === 'FBMessage') {
                                                             return (
                                                                 <i className="far fa-envelope"></i>
                                                             )
@@ -286,7 +324,8 @@ export default class FacebookChat extends Component {
                         </div>
                     </div>
                     <div className="content">
-                        <div ref={(ref) => this.messagesRef = ref} onScroll={this.handleScrollMessage.bind(this)} className="messages">
+                        <div ref={(ref) => this.messagesRef = ref} onScroll={this.handleScrollMessage.bind(this)}
+                             className="messages">
                             {this.state.messages.size > 0 ? this.state.messages.map((message, index) => {
                                 return (
                                     <div key={index} className={classNames('message', {'me': message.me})}>

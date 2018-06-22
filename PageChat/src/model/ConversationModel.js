@@ -67,7 +67,7 @@ export default class ConversationModel {
     }
 
     checkLastReply(from_id){
-        return this.pageId == from_id;
+        return this.pageId === from_id;
     }
 
     authentication() {
