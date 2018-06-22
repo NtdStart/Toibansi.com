@@ -22,10 +22,11 @@
       <file leaf-file-name="facebookChat.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="298" column="74" selection-start-line="298" selection-start-column="74" selection-end-line="298" selection-end-column="74" />
+            <state relative-caret-position="574">
+              <caret line="396" column="59" selection-start-line="396" selection-start-column="55" selection-end-line="396" selection-end-column="59" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
+                <element signature="e#7734#13415#0" />
               </folding>
             </state>
           </provider>
@@ -43,8 +44,8 @@
       <file leaf-file-name="app.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PageChat/src/statics/css/app.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="433" lean-forward="true" selection-start-line="433" selection-end-line="433" />
+            <state relative-caret-position="433">
+              <caret line="858" column="24" lean-forward="true" selection-start-line="858" selection-start-column="24" selection-end-line="858" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -70,9 +71,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>.converstation.message.onAdd</find>
-      <find>Begin connecting to server via websocket.</find>
-      <find>CallFacebookAPI</find>
       <find>callFacebookAPI</find>
       <find>bind</find>
       <find>getMessagesFromConversation</find>
@@ -99,6 +97,9 @@
       <find>chanels</find>
       <find>chanel</find>
       <find>conversation-info .right</find>
+      <find>.conversations .conversation .conversation-rig</find>
+      <find>.conversations</find>
+      <find>.app-messenger .main .sidebar-right</find>
       <find>chanel-info</find>
     </findStrings>
     <replaceStrings>
@@ -302,12 +303,12 @@
       <workItem from="1529129521512" duration="735000" />
       <workItem from="1529154935264" duration="5388000" />
       <workItem from="1529242811780" duration="6554000" />
-      <workItem from="1529699770059" duration="8741000" />
+      <workItem from="1529699770059" duration="10955000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98055000" />
+    <option name="totallyTimeSpent" value="100269000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -621,6 +622,7 @@
           <caret line="119" column="23" lean-forward="true" selection-start-line="119" selection-start-column="23" selection-end-line="119" selection-end-column="23" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#7734#13415#0" />
           </folding>
         </state>
       </provider>
@@ -699,18 +701,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="298" column="74" selection-start-line="298" selection-start-column="74" selection-end-line="298" selection-end-column="74" />
+        <state relative-caret-position="574">
+          <caret line="396" column="59" selection-start-line="396" selection-start-column="55" selection-end-line="396" selection-end-column="59" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#7734#13415#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/statics/css/app.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="433" lean-forward="true" selection-start-line="433" selection-end-line="433" />
+        <state relative-caret-position="433">
+          <caret line="858" column="24" lean-forward="true" selection-start-line="858" selection-start-column="24" selection-end-line="858" selection-end-column="24" />
         </state>
       </provider>
     </entry>

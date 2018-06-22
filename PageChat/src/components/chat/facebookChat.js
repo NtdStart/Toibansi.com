@@ -370,16 +370,44 @@ export default class FacebookChat extends Component {
                                     <i className="fa fa-upload"></i>
                                     <p>Tải hình mới</p>
                                 </div>
-                                <div className="item">
-                                    <i className="fa fa-list-alt"></i>
-                                    <p>Tin nhắn mẫu</p>
-                                </div>
                             </div>
                         </div>}
 
                     </div>
                     <div className="sidebar-right">
-
+                        <div className="participant-info-customer">
+                            <div className="participant-info-customer-detail">
+                                Thông tin khách hàng
+                            </div>
+                            <div>
+                                <div className="participant-info-customer-comment border-top">
+                                    Lưu ý
+                                </div>
+                            </div>
+                            <div>
+                                <div className="participant-info-customer-sample-message border-top">
+                                    <i className="fa fa-list-alt"></i>
+                                    <ul className="list-unstyled">
+                                        <li className="item">
+                                            <span>
+                                                A check inbox nhé a, nếu không nhận được tin nhắn của shop phiền anh ib cho
+                                                shop ạ. Cám ơn a!
+                                            </span>
+                                        </li>
+                                        <li className="item">
+                                            <span>
+                                                A cho em chiều cao vs cân nặng em tư vấn size ạ
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="participant-info-customer-orders border-top">
+                                Danh sách đơn hàng
+                            </div>
+                        </div>
                     </div>
                 </div>
 

@@ -157,13 +157,13 @@ body {
 }
 
 .app-messenger .main .sidebar-left {
-    width: 360px;
+    width: 365px;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .app-messenger .main .sidebar-right {
     border-left: 1px solid rgba(0, 0, 0, 0.2);
-    width: 300px;
+    width: 350px;
 }
 
 .app-messenger .main .sidebar-right .title {
@@ -179,6 +179,7 @@ body {
 
 .app-messenger .main .content .messages {
     flex-grow: 1;
+    overflow-x: hidden;
 }
 
 .app-messenger .main .content .messenger-input {
@@ -306,6 +307,7 @@ textarea.form-control {
 .conversations {
     overflow-y: auto;
     height: 100%;
+    width: 365px;
 }
 
 .conversations .conversation {
@@ -432,7 +434,7 @@ textarea.form-control {
     overflow: hidden;
 }
 
-.conversations .conversation .conversation-right{
+.conversations .conversation .conversation-right {
     float: right;
     width: calc(100% - 200px);
 }
@@ -820,4 +822,54 @@ h2.title {
     color: #005e94;
     border-radius: 3px;
     margin-left: 5px;
+}
+
+.participant-info-customer {
+    float: none;
+    vertical-align: top;
+    height: 140px;
+}
+
+.sidebar-right .participant-info-customer {
+    height: calc(100% - 166px);
+    overflow-y: auto;
+}
+
+.participant-info-customer .participant-info-customer-detail {
+    padding: 10px 15px 10px;
+}
+
+.participant-info-customer .participant-info-customer-comment {
+    padding: 10px 15px;
+}
+
+.participant-info-customer .participant-info-customer-sample-message {
+
+}
+
+.participant-info-customer .participant-info-customer-sample-message .item {
+    padding: 5px;
+}
+
+.participant-info-customer .participant-info-customer-sample-message span {
+    border: none;
+    display: inline-block;
+    padding: 0 5px !important;
+    font-size: 14px;
+    background: #cae9f7;
+    color: #005e94;
+    border-radius: 3px;
+    margin-left: 5px;
+}
+
+.participant-info-customer .participant-info-customer-sample-message span:hover {
+    cursor: pointer;
+}
+
+.participant-info-customer .participant-info-customer-orders {
+    padding: 10px 15px;
+}
+
+.border-top {
+    border-top: 1px solid #ebeef0 !important;
 }
