@@ -277,7 +277,7 @@ export default class FacebookChat extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="chanels"
+                        <div className="conversations"
                              onScroll={this.handleScroll.bind(this)}
                              ref={(scroll) => this.scroller = scroll}
                         >
@@ -286,21 +286,19 @@ export default class FacebookChat extends Component {
                                     <div onClick={(key) => {
                                         facebookChat.setActiveConversation(conversation._id, conversation.type);
                                     }} key={conversation._id}
-                                         className={classNames('chanel', {'notify': _.get(conversation, 'notify') === true}, {'active': _.get(activeChannel, '_id') === _.get(conversation, '_id', null)})}>
+                                         className={classNames('conversation', {'notify': _.get(conversation, 'notify') === true}, {'active': _.get(activeChannel, '_id') === _.get(conversation, '_id', null)})}>
                                         <div className="user-image">
                                             {this.renderAvatars(conversation)}
                                         </div>
-                                        <div className="chanel-info conversation-snippet">
+                                        <div className="conversation-info conversation-snippet">
                                             <p className="conversation-sender">{conversation.senders}</p>
                                             <span>
                                                 {renderIcon(conversation.last_reply)}
                                                 {conversation.snippet}</span>
                                         </div>
-                                        <div className="chanel-info">
-                                            <div>
-                                                <i className="fa fa-clock-o"></i>
-                                                <span>{conversation.updated_time}</span>
-                                            </div>
+                                        <div className="conversation-right">
+                                            <i className="fa fa-clock-o"></i>
+                                            <span>{conversation.updated_time}</span>
                                             <div>
                                                 {
                                                     function (type) {
@@ -350,7 +348,6 @@ export default class FacebookChat extends Component {
                                     <i className="fa fa-plus"></i>
                                 </a>
                             </div>
-                            <div className="clearfix"/>
                             <div className="text-input">
 										<textarea className="form-control" onKeyUp={(event) => {
                                             if (event.key === 'Enter' && !event.shiftKey) {
@@ -360,8 +357,23 @@ export default class FacebookChat extends Component {
                                             this.setState({newMessage: _.get(event, 'target.value')});
                                         }} value={this.state.newMessage} placeholder=" Nhập câu trả lời ... "/>
                             </div>
-                            <div className="actions">
+                            <div className="sendMsg">
                                 <button onClick={this.handleSend} className="btn btn-info">Send</button>
+                            </div>
+                            <div className="clearfix"/>
+                            <div className="actions">
+                                <div className="item">
+                                    <i className="fa fa-camera"></i>
+                                    <p>Kho hình ảnh</p>
+                                </div>
+                                <div className="item">
+                                    <i className="fa fa-upload"></i>
+                                    <p>Tải hình mới</p>
+                                </div>
+                                <div className="item">
+                                    <i className="fa fa-list-alt"></i>
+                                    <p>Tin nhắn mẫu</p>
+                                </div>
                             </div>
                         </div>}
 

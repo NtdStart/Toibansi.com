@@ -189,6 +189,9 @@ body {
 
 .app-messenger .main .content .messenger-input .text-input {
     flex-grow: 1;
+    float: left;
+    width: 90%;
+    padding: 5px;
 }
 
 textarea.form-control {
@@ -207,20 +210,18 @@ textarea.form-control {
     background-image: none;
     border: 1px solid #ccc;
     border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
-
 
 .app-messenger .main .content .messenger-input .text-input textarea {
     height: 58px;
     max-height: 300px;
-    width: calc(100% - 40px);
     resize: none;
     overflow: hidden;
-    line-height: 2.4rem!important;
+    line-height: 2.4rem !important;
     transition: min-height .15s;
     z-index: 2;
     position: relative;
@@ -228,12 +229,26 @@ textarea.form-control {
     margin-right: 40px;
 }
 
-.app-messenger .main .content .messenger-input .actions button.send {
+.app-messenger .main .content .messenger-input .sendMsg {
+    padding: 5px;
+}
+
+.app-messenger .main .content .messenger-input .sendMsg button.send {
     background: #2ecc71;
     color: #FFF;
     border: 0 none;
-    padding: 7px 15px;
     line-height: 50px;
+    float: right;
+}
+
+.app-messenger .main .content .messenger-input .actions {
+    padding: 5px;
+    text-align: center;
+}
+
+.app-messenger .main .content .messenger-input .actions .item {
+    float: left;
+    margin-left: 12px;
 }
 
 .messages {
@@ -288,12 +303,12 @@ textarea.form-control {
     margin-right: 40px;
 }
 
-.chanels {
+.conversations {
     overflow-y: auto;
     height: 100%;
 }
 
-.chanels .chanel {
+.conversations .conversation {
     cursor: pointer;
     display: flex;
     padding: 7px;
@@ -303,35 +318,35 @@ textarea.form-control {
     cursor: pointer;
 }
 
-.chanels .chanel .conversation-sender {
+.conversations .conversation .conversation-sender {
     font-weight: bolder;
 }
 
-.chanels .chanel .conversation-snippet {
+.conversations .conversation .conversation-snippet {
     white-space: nowrap;
     display: block;
     text-overflow: ellipsis;
     overflow: hidden;
-    width: calc(100% - 45px);
+    width: calc(100% - 20px);
     position: initial;
     margin-top: 2px;
 }
 
-.chanels .chanel .user-image {
+.conversations .conversation .user-image {
     width: 80px;
 }
 
-.chanels .chanel .user-image img {
+.conversations .conversation .user-image img {
     border-radius: 30px;
     height: 55px;
     width: 55px;
 }
 
-.chanels .chanel .user-image img {
+.conversations .conversation .user-image img {
     max-width: 100%;
 }
 
-.chanels .chanel .user-image .channel-avatars {
+.conversations .conversation .user-image .channel-avatars {
     overflow: hidden;
     width: 30px;
     height: 30px;
@@ -340,13 +355,13 @@ textarea.form-control {
     position: relative;
 }
 
-.chanels .chanel .user-image .channel-avatars.channel-avatars-1 img {
+.conversations .conversation .user-image .channel-avatars.channel-avatars-1 img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
 }
 
-.chanels .chanel .user-image .channel-avatars.channel-avatars-2 img {
+.conversations .conversation .user-image .channel-avatars.channel-avatars-2 img {
     width: 50%;
     height: 100%;
     position: absolute;
@@ -354,12 +369,12 @@ textarea.form-control {
     top: 0;
 }
 
-.chanels .chanel .user-image .channel-avatars.channel-avatars-2 img:first-child {
+.conversations .conversation .user-image .channel-avatars.channel-avatars-2 img:first-child {
     left: 0;
     top: 0;
 }
 
-.chanels .chanel .user-image .channel-avatars.channel-avatars-3 img {
+.conversations .conversation .user-image .channel-avatars.channel-avatars-3 img {
     position: absolute;
     width: 50%;
     height: 50%;
@@ -367,14 +382,14 @@ textarea.form-control {
     top: 0;
 }
 
-.chanels .chanel .user-image .channel-avatars.channel-avatars-3 img:first-child {
+.conversations .conversation .user-image .channel-avatars.channel-avatars-3 img:first-child {
     left: 0;
     top: 0;
     width: 50%;
     height: 100%;
 }
 
-.chanels .chanel .user-image .channel-avatars.channel-avatars-3 img:last-child {
+.conversations .conversation .user-image .channel-avatars.channel-avatars-3 img:last-child {
     bottom: 0;
     right: 0;
     top: 15px;
@@ -382,7 +397,7 @@ textarea.form-control {
     height: 50%;
 }
 
-.chanels .chanel .user-image .channel-avatars.channel-avatars-4 img {
+.conversations .conversation .user-image .channel-avatars.channel-avatars-4 img {
     position: absolute;
     width: 50%;
     height: 50%;
@@ -390,14 +405,14 @@ textarea.form-control {
     top: 0;
 }
 
-.chanels .chanel .user-image .channel-avatars.channel-avatars-4 img:first-child {
+.conversations .conversation .user-image .channel-avatars.channel-avatars-4 img:first-child {
     left: 0;
     top: 0;
     width: 50%;
     height: 100%;
 }
 
-.chanels .chanel .user-image .channel-avatars.channel-avatars-4 img:nth-child(3n) {
+.conversations .conversation .user-image .channel-avatars.channel-avatars-4 img:nth-child(3n) {
     bottom: 0;
     right: 0;
     top: 15px;
@@ -405,20 +420,28 @@ textarea.form-control {
     height: 50%;
 }
 
-.chanels .chanel .user-image .channel-avatars.channel-avatars-4 img:last-child {
+.conversations .conversation .user-image .channel-avatars.channel-avatars-4 img:last-child {
     left: 0;
     bottom: 0;
     top: 15px;
 }
 
-.chanels .chanel .chanel-info {
+.conversations .conversation .conversation-info {
     flex-grow: 1;
     padding-left: 8px;
-    padding-right: 8px;
     overflow: hidden;
 }
 
-.chanels .chanel .chanel-info h2 {
+.conversations .conversation .conversation-right{
+    float: right;
+    width: calc(100% - 200px);
+}
+
+.conversations .conversation .conversation-right span {
+    font-size: 12px;
+}
+
+.conversations .conversation .conversation-info h2 {
     font-size: 13px;
     font-weight: 400;
     white-space: nowrap;
@@ -426,18 +449,18 @@ textarea.form-control {
     overflow: hidden;
 }
 
-.chanels .chanel .chanel-info p {
+.conversations .conversation .conversation-info p {
     font-size: 12px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
 
-.chanels .chanel.active {
+.conversations .conversation.active {
     background-color: #ebeef4;
 }
 
-.chanels .chanel.notify .chanel-info p {
+.conversations .conversation.notify .conversation-info p {
     color: #2ecc71;
 }
 
@@ -758,29 +781,32 @@ h2.title {
     width: 100%;
     font-size: 14px;
 }
+
 .wrap-search-input {
     position: relative;
 }
+
 .icon-search {
     position: absolute;
     line-height: 24px;
     padding: 8px 10px;
     color: #a0a0a0;
 }
+
 .fa-reply {
     font-weight: 900;
     opacity: 0.6;
     padding-right: 3px;
 }
 
-.conversation-tags{
+.conversation-tags {
     font-size: 12px;
     height: 39px;
     padding: 5px 15px;
-    border-bottom: 1px solid #ebeef0!important;
+    border-bottom: 1px solid #ebeef0 !important;
 }
 
-.facebook.tags{
+.facebook.tags {
     padding: 5px;
     line-height: 25px;
 }
@@ -788,7 +814,7 @@ h2.title {
 .facebook.tags .item {
     border: none;
     display: inline-block;
-    padding: 0 5px!important;
+    padding: 0 5px !important;
     font-size: 12px;
     background: #cae9f7;
     color: #005e94;
