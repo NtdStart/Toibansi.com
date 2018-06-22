@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import ConversationController from '../../controller/ConverstationController'
-import FacebookChat from './facebookChat'
+import ConversationController from '../controller/ConverstationController'
+import FacebookChat from './chat/facebookChat'
 
 export default class App extends Component {
 

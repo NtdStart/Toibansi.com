@@ -22,27 +22,55 @@
       <file leaf-file-name="CallFacebookAPI.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PageChat/src/services/CallFacebookAPI.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+            <state relative-caret-position="442">
+              <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user-bar.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PageChat/src/components/user-bar.js">
+      <file leaf-file-name="MesagesModel.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PageChat/src/model/MesagesModel.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="21" selection-start-line="21" selection-end-line="21" />
+            <state relative-caret-position="646">
+              <caret line="40" column="5" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user-form.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/PageChat/src/components/user-form.js">
+      <file leaf-file-name="facebookChat.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="307">
+              <caret line="205" column="38" lean-forward="true" selection-start-line="205" selection-start-column="38" selection-end-line="205" selection-end-column="38" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConverstationController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PageChat/src/controller/ConverstationController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1156">
+              <caret line="75" column="17" selection-start-line="75" selection-start-column="17" selection-end-line="75" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#36#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -120,11 +148,11 @@
         <option value="$PROJECT_DIR$/PageChat/src/controller/ConverstationController.js" />
         <option value="$PROJECT_DIR$/PageChat/package.json" />
         <option value="$PROJECT_DIR$/PageChat/src/routes/DelegateMarkdownLinks.js" />
-        <option value="$PROJECT_DIR$/PageChat/src/components/chat/index.js" />
         <option value="$PROJECT_DIR$/PageChat/src/index.js" />
         <option value="$PROJECT_DIR$/PageChat/src/routes/index.js" />
-        <option value="$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js" />
         <option value="$PROJECT_DIR$/PageChat/src/services/CallFacebookAPI.js" />
+        <option value="$PROJECT_DIR$/PageChat/src/components/chat/index.js" />
+        <option value="$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js" />
       </list>
     </option>
   </component>
@@ -160,17 +188,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <expand>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="Toibansi.com" type="cbb8eebc:String" user="Toibansi.com" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -182,12 +199,6 @@
               <item name="Toibansi.com" type="b2602c69:ProjectViewProjectNode" />
               <item name="Toibansi.com" type="462c0819:PsiDirectoryNode" />
               <item name="PageChat" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Toibansi.com" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Toibansi.com" type="462c0819:PsiDirectoryNode" />
-              <item name="PageChat" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Toibansi.com" type="b2602c69:ProjectViewProjectNode" />
@@ -229,7 +240,14 @@
               <item name="Toibansi.com" type="462c0819:PsiDirectoryNode" />
               <item name="PageChat" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="realtime" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Toibansi.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Toibansi.com" type="462c0819:PsiDirectoryNode" />
+              <item name="PageChat" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Toibansi.com" type="b2602c69:ProjectViewProjectNode" />
@@ -237,6 +255,22 @@
               <item name="PageChat" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Toibansi.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Toibansi.com" type="462c0819:PsiDirectoryNode" />
+              <item name="PageChatCore" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="Toibansi.com" type="cbb8eebc:String" user="Toibansi.com" />
             </path>
           </expand>
           <select />
@@ -254,18 +288,18 @@
     <property name="settings.editor.selected.configurable" value="project.propDebugger" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Code\Toibansi.com\PageChat\src\components\chat" />
-      <recent name="D:\Code\Toibansi.com\PageChat\src\controller" />
-      <recent name="D:\Code\Toibansi.com\PageChat\src\realtime" />
-      <recent name="D:\Code\Toibansi.com\PageChat\src\services" />
-      <recent name="D:\Code\Toibansi.com\PageChat\src" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Code\Toibansi.com\PageChat\public" />
       <recent name="D:\Code\Toibansi.com\PageChat\src\model" />
       <recent name="D:\Code\Toibansi.com\PageChat\src\services" />
       <recent name="D:\Code\Toibansi.com\PageChat\public\css" />
+      <recent name="D:\Code\Toibansi.com\PageChat\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Code\Toibansi.com\PageChat\src\components\chat" />
+      <recent name="D:\Code\Toibansi.com\PageChat\src\controller" />
+      <recent name="D:\Code\Toibansi.com\PageChat\src\realtime" />
+      <recent name="D:\Code\Toibansi.com\PageChat\src\services" />
       <recent name="D:\Code\Toibansi.com\PageChat\src" />
     </key>
   </component>
@@ -308,21 +342,20 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="82662000" />
+    <option name="totallyTimeSpent" value="82717000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1413" y="-4" width="1873" height="1084" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21783236" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21812434" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50052685" side_tool="true" weight="0.32924107" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.40471312" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32889345" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -335,10 +368,12 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50052685" side_tool="true" weight="0.32924107" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info active="true" anchor="bottom" id="Find" order="1" sideWeight="0.49947312" visible="true" weight="0.32924107" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -347,19 +382,19 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21812434" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.32924107" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.32924107" />
       <window_info id="Favorites" order="2" side_tool="true" />
     </layout-to-restore>
   </component>
@@ -401,16 +436,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/PageChat/src/controller/ConverstationController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7225">
-          <caret line="430" lean-forward="true" selection-start-line="430" selection-end-line="430" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/services/service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -513,9 +538,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/store.js" />
-    <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/css/main.scss" />
     <entry file="file://$PROJECT_DIR$/PageChat/src/helpers/objectid.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -639,13 +661,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="5" lean-forward="true" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/routes/DelegateMarkdownLinks.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -679,32 +694,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/model/MesagesModel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="38" column="21" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
+        <state relative-caret-position="646">
+          <caret line="40" column="5" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/services/CallFacebookAPI.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+        <state relative-caret-position="442">
+          <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/controller/ConverstationController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="77" column="17" selection-start-line="77" selection-start-column="4" selection-end-line="77" selection-end-column="17" />
+        <state relative-caret-position="1156">
+          <caret line="75" column="17" selection-start-line="75" selection-start-column="17" selection-end-line="75" selection-end-column="17" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="126" column="33" selection-start-line="126" selection-start-column="33" selection-end-line="126" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -716,8 +727,42 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/components/user-form.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="269">
+          <caret line="119" column="23" lean-forward="true" selection-start-line="119" selection-start-column="23" selection-end-line="119" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PageChat/src/components/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="1" lean-forward="true" selection-end-line="19" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="205" column="38" lean-forward="true" selection-start-line="205" selection-start-column="38" selection-end-line="205" selection-end-column="38" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>

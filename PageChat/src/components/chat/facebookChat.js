@@ -43,11 +43,23 @@ export default class FacebookChat extends Component {
     }
 
     renderMessage(message) {
-        const text = message;
-        const html = _.split(text, '\n').map((m, key) => {
-            return <p key={key} dangerouslySetInnerHTML={{__html: m}}/>
-        })
-        return html;
+        if (message.attachment==null)
+        return (
+            <div className="message-body">
+                <div className="message-text">
+                    {message.message}
+                </div>
+            </div>
+        )
+        else {
+            return (
+                <div className="message-body">
+                    <div className="message-text">
+                        <img src={message.attachment.media.image.src} height={message.attachment.media.image.height} width={message.attachment.media.image.width} alt=""/>
+                    </div>
+                </div>
+            )
+        }
     }
 
     handleSend() {
@@ -146,6 +158,7 @@ export default class FacebookChat extends Component {
         if (this.state.activeTab === type) return false;
         const {facebookChat} = this.props;
         facebookChat.conversations = new OrderedMap();
+        facebookChat.resetCursor();
         switch (type) {
             case 1:
                 facebookChat.fetchConversationAndComment();
@@ -172,6 +185,15 @@ export default class FacebookChat extends Component {
         };
         const activeChannel = facebookChat.getActiveConversation();
         const conversations = facebookChat.getConversations();
+
+        function renderIcon (reply) {
+            if (reply) {
+                return (
+                    <i className="fas fa-reply"></i>
+                )
+            }
+        }
+
         return (
             <div style={style} className="app-messenger">
                 <div className="header">
@@ -233,7 +255,30 @@ export default class FacebookChat extends Component {
                                         </div>
                                         <div className="chanel-info conversation-snippet">
                                             <p className="conversation-sender">{conversation.senders}</p>
-                                            <span>{conversation.snippet}</span>
+                                            <span>
+                                                {renderIcon(conversation.last_reply)}
+                                                  {conversation.snippet}</span>
+                                        </div>
+                                        <div className="chanel-info">
+                                            <div>
+                                                <i className="fa fa-clock-o"></i>
+                                                <span>{conversation.updated_time}</span>
+                                            </div>
+                                            <div>
+                                                {
+                                                    function (type) {
+                                                        if (type=='FBMessage') {
+                                                            return (
+                                                                <i className="far fa-envelope"></i>
+                                                            )
+                                                        } else {
+                                                            return (
+                                                                <i className="far fa-comment"></i>
+                                                            )
+                                                        }
+                                                    }(conversation.type)
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 )
@@ -248,11 +293,7 @@ export default class FacebookChat extends Component {
                                         <div className="message-user-image">
                                             <img src={message.from_avatar} alt=""/>
                                         </div>
-                                        <div className="message-body">
-                                            <div className="message-text">
-                                                {this.renderMessage(message.message)}
-                                            </div>
-                                        </div>
+                                        {this.renderMessage(message)}
                                     </div>
                                 )
                             }) : null}
