@@ -107,8 +107,7 @@ export default class FacebookChat extends Component {
     componentWillUpdate() {
     }
 
-    getDataMess() {
-        const {facebookChat} = this.props;
+    getDataMess(facebookChat) {
         const messages = facebookChat.getMessages();
         if (messages.size > 0)
             this.setState({
@@ -117,8 +116,9 @@ export default class FacebookChat extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.getDataMess();
-        // console.log('Component Will Receive Props!')
+        const {facebookChat} = nextProps;
+        this.getDataMess(facebookChat);
+        console.log('Component Will Receive Props!')
     }
 
     componentDidMount() {
