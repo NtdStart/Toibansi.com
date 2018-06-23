@@ -1,85 +1,44 @@
 'use strict';
 
+// Chat application dependencies
+
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+var express = require('express');
+var app = express();
+var path = require('path');
+var bodyParser = require('body-parser');
+var flash = require('connect-flash');
 
-var _http = require('http');
+// Chat application components
+var routes = require('./routes');
+var session = require('./session');
+var passport = require('./auth');
+var logger = require('./logger');
 
-var _http2 = _interopRequireDefault(_http);
-
-var _express = require('express');
-
-var _express2 = _interopRequireDefault(_express);
-
-var _cors = require('cors');
-
-var _cors2 = _interopRequireDefault(_cors);
-
-var _bodyParser = require('body-parser');
-
-var _bodyParser2 = _interopRequireDefault(_bodyParser);
-
-var _package = require('../package.json');
-
-var _uws = require('uws');
-
-var _uws2 = _interopRequireDefault(_uws);
-
-var _appRouter = require('./app-router');
-
-var _appRouter2 = _interopRequireDefault(_appRouter);
-
-var _models = require('./models');
-
-var _models2 = _interopRequireDefault(_models);
-
-var _database = require('./database');
-
-var _database2 = _interopRequireDefault(_database);
-
-var _path = require('path');
-
-var _path2 = _interopRequireDefault(_path);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+// Set the port number
 var PORT = 3001;
-var app = (0, _express2.default)();
-app.server = _http2.default.createServer(app);
+var port = process.env.PORT || PORT;
 
-//app.use(morgan('dev'));
+// View engine setup
+app.set('views', path.join(__dirname, 'app/views'));
+app.set('view engine', 'ejs');
 
-app.use((0, _cors2.default)({
-    exposedHeaders: "*"
-}));
+// Middlewares
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static('public'));
 
-app.use(_bodyParser2.default.json({
-    limit: '50mb'
-}));
+app.use(session);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
-app.wss = new _uws.Server({
-    server: app.server
-});
-// static www files use express
-var wwwPath = _path2.default.join(__dirname, 'www');
-app.use('/', _express2.default.static(wwwPath));
+app.use('/', routes);
 
-// Connect to Mongo Database
-
-new _database2.default().connect().then(function (db) {
-    console.log("Successful connected to database.");
-    app.db = db;
-}).catch(function (err) {
-    throw err;
-});
-
-// End connect to Mongodb Database
-app.models = new _models2.default(app);
-app.routers = new _appRouter2.default(app);
-
-app.server.listen(process.env.PORT || PORT, function () {
-    console.log('App is running on port ' + app.server.address().port);
+app.listen(process.env.PORT || PORT, function () {
+    console.log('App is running on port ' + port);
 });
 
 exports.default = app;
