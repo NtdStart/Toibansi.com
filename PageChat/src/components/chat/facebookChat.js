@@ -91,7 +91,28 @@ export default class FacebookChat extends Component {
             })
         }
     }
+    sendPhoto(event, props) {
+        const file = event.target.files[0];
+        const {facebookChat} = props;
 
+        const messageId = new ObjectID().toString();
+        const currentUser = facebookChat.getCurrentUser();
+        const channel = facebookChat.getActiveConversation();
+        const channelId = _.get(channel, '_id', null);
+        const message = {
+            _id: messageId,
+            channelId: channelId,
+            body: file,
+            userId: _.get(currentUser, '_id'),
+            me: true,
+        };
+
+        if(channelId.charAt(0) === 't') {
+            facebookChat.sendMessage(messageId, message);
+        } else {
+            facebookChat.postComment(messageId, message);
+        }
+    }
     _onResize() {
         this.setState({
             height: window.innerHeight
@@ -367,8 +388,15 @@ export default class FacebookChat extends Component {
                                     <p>Kho hình ảnh</p>
                                 </div>
                                 <div className="item">
-                                    <i className="fa fa-upload"></i>
-                                    <p>Tải hình mới</p>
+                                    <input ref={input => this.inputElement = input}  type="file" className={'hide'} onChange={(event) => {
+                                        this.sendPhoto(event, this.props);
+                                    }}/>
+                                    <div className="label_input"
+                                        onClick={()=>this.inputElement.click()}
+                                    >
+                                        <i className="fa fa-upload"></i>
+                                        <p>Tải hình mới</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>}

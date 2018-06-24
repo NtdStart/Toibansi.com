@@ -874,3 +874,11 @@ h2.title {
 .border-top {
     border-top: 1px solid #ebeef0 !important;
 }
+
+.hide {
+    display: none;
+}
+
+.label_input {
+    cursor: pointer;
+}

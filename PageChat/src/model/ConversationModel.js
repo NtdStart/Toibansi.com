@@ -9,7 +9,7 @@ export default class ConversationModel {
     }
 
     onAdd(payload, key) {
-        let id, can_reply, snippet, senders, userFbId, avatar, updated_time, last_reply;
+        let id, can_reply, snippet, senders, userFbId, avatar, updated_time, last_reply, unread;
         if (key==='inbox') {
             id = `${payload.id}`;
             can_reply = `${payload.can_reply}`;
@@ -17,6 +17,7 @@ export default class ConversationModel {
             senders = `${payload.senders.data[0].name}`;
             userFbId = `${payload.senders.data[0].id}`;
             updated_time = `${payload.updated_time}`;
+            unread = `${payload.unread_count}`;
             avatar = 'https://graph.facebook.com/' + userFbId + '/picture?width=70&height=70';
             let conversation = {
                 _id: id,
@@ -27,6 +28,7 @@ export default class ConversationModel {
                 type: 'FBMessage',
                 last_reply: true,
                 unix_time: updated_time,
+                unread: unread,
                 updated_time: parseUnixTime(updated_time),
             };
             this.converstation.add(id, conversation);

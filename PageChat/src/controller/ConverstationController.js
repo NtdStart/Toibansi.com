@@ -509,6 +509,42 @@ export default class ConversationController {
         // console.log(JSON.stringify(this.messages.toJS()));
     }
 
+    sendMessage(id, message = {}) {
+        // we need add user object who is author of this message
+        const user = this.getCurrentUser();
+        message.user = user;
+        this.messages = this.messages.set(id, message);
+        // let's add new message id to current channel->messages.
+        const channelId = _.get(message, 'channelId');
+        if (channelId) {
+            let message_send = _.get(message, 'body');
+            // now send this channel info to the server
+            this.callFacebookAPI.sendMessage(channelId, message_send, null).then((response) => {
+                this.update();
+            }).catch((err) => {
+                console.log("An error sending message", err);
+            })
+        }
+    }
+
+    postComment(id, message = {}) {
+        // we need add user object who is author of this message
+        const user = this.getCurrentUser();
+        message.user = user;
+        this.messages = this.messages.set(id, message);
+        // let's add new message id to current channel->messages.
+        const channelId = _.get(message, 'channelId');
+        if (channelId) {
+            let message_send = _.get(message, 'body');
+            // now send this channel info to the server
+            this.callFacebookAPI.postComment(channelId, message_send, null).then((response) => {
+                this.update();
+            }).catch((err) => {
+                console.log("An error posting comment", err);
+            })
+        }
+    }
+
     getMessagesFromConversation() {
         this.isLoading = true;
         let activeChannel = this.activeChannelId;
