@@ -35,6 +35,69 @@ export default class FacebookChat extends Component {
     }
 
 
+    renderChatRight() {
+        return (
+            <div className="chat-right">
+                <div className="participant-info-customer">
+                    <div className="participant-info-customer-detail">
+                        Thông tin khách hàng
+                    </div>
+                    <div>
+                        <div className="participant-info-customer-comment border-top">
+                            Lưu ý
+                        </div>
+                    </div>
+                    <div>
+                        <div className="participant-info-customer-sample-message border-top">
+                            <i className="fa fa-list-alt"></i>
+                            <ul className="list-unstyled">
+                                <li className="item">
+                                            <span>
+                                                A check inbox nhé a, nếu không nhận được tin nhắn của shop phiền anh ib cho
+                                                shop ạ. Cám ơn a!
+                                            </span>
+                                </li>
+                                <li className="item">
+                                            <span>
+                                                A cho em chiều cao vs cân nặng em tư vấn size ạ
+                                            </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div className="participant-info-customer-orders border-top">
+                        Danh sách đơn hàng
+                    </div>
+                </div>
+            </div>
+        )
+    }
+    renderNavigationRight() {
+        return (<nav id="navigation-right">
+            <div className="header">
+                <div id="dismiss">
+                    <i id="fa-align-right" className="fas fa-align-right"></i>
+                </div>
+            </div>
+            <ul className="list-unstyled components">
+                <div className="collapse-left">
+                    <div className="page-avatar active">
+                        {this.renderAvatarPage()}
+                    </div>
+                </div>
+                <div className="collapse-right">
+                </div>
+                <div id="logout">
+                    <a href="/">Thoát</a>
+                </div>
+                <div className="clearfix"/>
+            </ul>
+        </nav>)
+    }
+
+
     renderTitle(converstation = null) {
         if (!converstation) {
             return null;
@@ -234,26 +297,7 @@ export default class FacebookChat extends Component {
         return (
             <div style={style} className="app-messenger">
                 <div className="overlay"></div>
-                <nav id="sidebar">
-                    <div className="sidebar-header">
-                        <div id="dismiss">
-                            <i id="fa-align-right" className="fas fa-align-right"></i>
-                        </div>
-                    </div>
-                    <ul className="list-unstyled components">
-                        <div className="sidebar-collap-left">
-                            <div className="page-avatar active">
-                                {this.renderAvatarPage()}
-                            </div>
-                        </div>
-                        <div className="sidebar-collap-right">
-                        </div>
-                        <div id="logout">
-                            <a href="/">Thoát</a>
-                        </div>
-                        <div className="clearfix"/>
-                    </ul>
-                </nav>
+                {this.renderNavigationRight()}
                 <div className="header">
                     <div className="content">
                         {this.renderTitle(activeChannel)}
@@ -261,8 +305,8 @@ export default class FacebookChat extends Component {
                     <div className="right">
                     </div>
                 </div>
-                <div className="main">
-                    <div className="sidebar-left">
+                <div className="chat">
+                    <div className="chat-left">
                         <div className="fb-wrap-bar-search">
                             <div className="fb-chat-action-bar">
                                 <div className="fb-chat-menu">
@@ -345,7 +389,7 @@ export default class FacebookChat extends Component {
                             })}
                         </div>
                     </div>
-                    <div className="content">
+                    <div className="chat-messages">
                         <div className="conversation-tags">
                             <i className="fa fa-tags"></i>
                         </div>
@@ -362,8 +406,6 @@ export default class FacebookChat extends Component {
                                 )
                             }) : null}
                         </div>
-
-
                         {<div className="messenger-input">
                             <div className="facebook tags">
                                 <div className="item">Đã tạo</div>
@@ -405,43 +447,8 @@ export default class FacebookChat extends Component {
                                 </div>
                             </div>
                         </div>}
-
                     </div>
-                    <div className="sidebar-right">
-                        <div className="participant-info-customer">
-                            <div className="participant-info-customer-detail">
-                                Thông tin khách hàng
-                            </div>
-                            <div>
-                                <div className="participant-info-customer-comment border-top">
-                                    Lưu ý
-                                </div>
-                            </div>
-                            <div>
-                                <div className="participant-info-customer-sample-message border-top">
-                                    <i className="fa fa-list-alt"></i>
-                                    <ul className="list-unstyled">
-                                        <li className="item">
-                                            <span>
-                                                A check inbox nhé a, nếu không nhận được tin nhắn của shop phiền anh ib cho
-                                                shop ạ. Cám ơn a!
-                                            </span>
-                                        </li>
-                                        <li className="item">
-                                            <span>
-                                                A cho em chiều cao vs cân nặng em tư vấn size ạ
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div className="participant-info-customer-orders border-top">
-                                Danh sách đơn hàng
-                            </div>
-                        </div>
-                    </div>
+                    {this.renderChatRight()}
                 </div>
 
             </div>

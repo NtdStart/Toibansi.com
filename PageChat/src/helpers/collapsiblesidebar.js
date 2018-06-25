@@ -3,12 +3,12 @@ import $ from 'jquery';
 export function collapsiblesidebar() {
     $(document).ready(function () {
         $('#dismiss, .overlay').on('click', function () {
-            $('#sidebar').removeClass('sidebar-collap');
+            $('#navigation-right').removeClass('navigation-right-collapse');
             $('.overlay').removeClass('active');
         });
         $('#dismiss').on('click', function () {
-            $('#sidebar').addClass('sidebar-collap');
-            $('#sidebar').addClass('active');
+            $('#navigation-right').addClass('navigation-right-collapse');
+            $('#navigation-right').addClass('active');
             $('.overlay').addClass('active');
             $('.collapse.in').toggleClass('in');
             $('a[aria-expanded=true]').attr('aria-expanded', 'false');
