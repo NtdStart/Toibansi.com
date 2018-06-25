@@ -91,6 +91,7 @@ export default class FacebookChat extends Component {
             })
         }
     }
+
     sendPhoto(event, props) {
         const file = event.target.files[0];
         const {facebookChat} = props;
@@ -107,12 +108,13 @@ export default class FacebookChat extends Component {
             me: true,
         };
 
-        if(channelId.charAt(0) === 't') {
+        if (channelId.charAt(0) === 't') {
             facebookChat.sendMessage(messageId, message);
         } else {
             facebookChat.postComment(messageId, message);
         }
     }
+
     _onResize() {
         this.setState({
             height: window.innerHeight
@@ -246,10 +248,12 @@ export default class FacebookChat extends Component {
                         </div>
                         <div className="sidebar-collap-right">
                         </div>
+                        <div id="logout">
+                            <a href="/">Thoát</a>
+                        </div>
                         <div className="clearfix"/>
                     </ul>
                 </nav>
-
                 <div className="header">
                     <div className="content">
                         {this.renderTitle(activeChannel)}
@@ -388,11 +392,12 @@ export default class FacebookChat extends Component {
                                     <p>Kho hình ảnh</p>
                                 </div>
                                 <div className="item">
-                                    <input ref={input => this.inputElement = input}  type="file" className={'hide'} onChange={(event) => {
-                                        this.sendPhoto(event, this.props);
-                                    }}/>
+                                    <input ref={input => this.inputElement = input} type="file" className={'hide'}
+                                           onChange={(event) => {
+                                               this.sendPhoto(event, this.props);
+                                           }}/>
                                     <div className="label_input"
-                                        onClick={()=>this.inputElement.click()}
+                                         onClick={() => this.inputElement.click()}
                                     >
                                         <i className="fa fa-upload"></i>
                                         <p>Tải hình mới</p>

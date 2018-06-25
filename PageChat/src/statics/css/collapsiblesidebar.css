@@ -106,6 +106,19 @@ a:focus {
     transition: all 0.3s;
 }
 
+#logout {
+    line-height: 35px;
+    text-align: center;
+    background: #738693;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
 #dismiss:hover {
     background: #fff;
     color: #738693;
