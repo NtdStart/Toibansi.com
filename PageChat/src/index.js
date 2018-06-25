@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/chat';
+import Routes from "./routes";
 import './statics/css/app.css'
 import './statics/css/collapsiblesidebar.css'
+import './statics/css/form.css'
+
 
 
 //import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Routes />, document.getElementById('wrapper'));
 
 //registerServiceWorker();
 
