@@ -28,7 +28,8 @@ export default class ConversationController {
         this.comments = new OrderedMap();
         this.comment = new CommentModel(this);
         this.message = new MessageModel(this);
-        this.converstation.pageId = this.message.mine = this.callFacebookAPI.getPageId();
+        this.pageId = this.callFacebookAPI.getPageId();
+        this.converstation.pageId = this.message.mine = this.pageId;
         this.nextConversation = null;
         this.nextMessage = null;
         this.isLoading = false;
@@ -39,29 +40,36 @@ export default class ConversationController {
         return this.realtime.isConnected;
     }
 
-    fetchConversations() {
-        this.isLoading = true;
-        const userToken = this.getUserTokenId();
-        if (userToken) {
+    handleSocket(data) {
+        console.log(data)
+        if (typeof data.entry[0].messaging !== 'undefined') {
+            let mess = data.entry[0].messaging[0];
+            let message = {
+                snippet: mess.message.text,
+                updated_time: mess.timestamp,
+                senders: {
+                    data: [
+                        {
+                            id: mess.sender.id,
+                            name: 'xxx'
+                        }
+                    ]
+                },
+                type: 'FBMessage',
+                unread_count: 1,
+                can_reply: 1
+            }
+            this.converstation.onAdd(message, 'inbox');
+        }
 
-        } else {
-            this.callFacebookAPI.getConversations(this.nextConversation, null).then((response) => {
-                this.nextConversation = (response.data.paging.next)? response.data.paging.cursors.after : null;
-                const channels = response.data.data;
-                _.each(channels, (c) => {
-                    this.converstation.onAdd(c, 'inbox');
-                });
-                this.isLoading = false;
-            }).catch((err) => {
-                console.log("An error fetching user conversations", err);
-            })
+        if (typeof data.entry[0].changes !== 'undefined') {
 
         }
     }
 
-    fetchConversationAndComment() {
+    fetchConversations() {
         this.isLoading = true;
-        this.callFacebookAPI.get_conversation_comment(this.nextConversation,null).then((response) => {
+        this.callFacebookAPI.getConversations(this.nextConversation, null).then((response) => {
             this.nextConversation = (response.data.paging.next)? response.data.paging.cursors.after : null;
             const channels = response.data.data;
             _.each(channels, (c) => {
@@ -73,6 +81,29 @@ export default class ConversationController {
         })
     }
 
+    fetchConversationAndComment() {
+        this.isLoading = true;
+        let conversations = this.callFacebookAPI.getConversations(this.nextConversation, null);
+        let comments = this.callFacebookAPI.getComments(this.nextConversation,null);
+        Promise.all([conversations, comments])
+            .then(response => {
+                let conversations = response[0].data.data;
+                _.each(conversations, (c) => {
+                    this.converstation.onAdd(c, 'inbox');
+                });
+
+                let comments = response[1].data.data;
+                _.each(comments, (c) => {
+                    if (typeof c.comments !== 'undefined')
+                        this.converstation.onAdd(c.comments, 'comment');
+                });
+                this.isLoading = false;
+            })
+            .catch(err => {
+                console.log("An error fetching user conversations", err);
+            })
+    }
+
     fetchComments() {
         this.isLoading = true;
         this.callFacebookAPI.getComments(this.nextConversation,null).then((response) => {
@@ -80,7 +111,7 @@ export default class ConversationController {
             const channels = response.data.data;
             _.each(channels, (c) => {
                 if (typeof c.comments !== 'undefined')
-                this.converstation.onAdd(c.comments, 'comment');
+                    this.converstation.onAdd(c.comments, 'comment');
             });
             this.isLoading = false;
         }).catch((err) => {
@@ -431,26 +462,13 @@ export default class ConversationController {
         if (this.activeChannelId===id) return false;
         this.activeChannelId = id;
         this.activeChannelType = type;
-        this.resetCursor();
         this.messages = new OrderedMap();
+        this.resetCursor();
         this.getMessagesFromConversation();
-        this.update();
-        // console.log("ActiveConversation Id ", id);
     }
 
     getActiveConversation() {
-        const conversation = this.conversations ? this.conversations.get(this.activeChannelId) : this.conversations.first();
-        return conversation;
-    }
-
-
-    getCurrentConversation() {
-        const channel = this.conversations.get(this.activeChannelId);
-        return channel;
-    }
-
-    getActiveChannelId() {
-        return this.activeChannelId;
+        return this.conversations ? this.conversations.get(this.activeChannelId) : this.conversations.first();
     }
 
     setMessage(message, notify = false) {
@@ -477,50 +495,38 @@ export default class ConversationController {
         this.update();
     }
 
-    addMessage(id, message = {}) {
-        // we need add user object who is author of this message
-        const user = this.getCurrentUser();
-        message.user = user;
-        this.messages = this.messages.set(id, message);
-        // let's add new message id to current channel->messages.
-        const channelId = _.get(message, 'channelId');
-        if (channelId) {
-            let channel = this.conversations.get(channelId);
-            channel.lastMessage = _.get(message, 'body', '');
-            // now send this channel info to the server
-            const obj = {
-                action: 'create_channel',
-                payload: channel,
-            };
-            this.realtime.send(obj);
-            //console.log("channel:", channel);
-            // send to the server via websocket to creawte new message and notify to other members.
-            this.realtime.send(
-                {
-                    action: 'create_message',
-                    payload: message,
-                }
-            );
-            channel.messages = channel.messages.set(id, true);
-            channel.isNew = false;
-            this.conversations = this.conversations.set(channelId, channel);
-        }
-        this.update();
-        // console.log(JSON.stringify(this.messages.toJS()));
-    }
-
     sendMessage(id, message = {}) {
-        // we need add user object who is author of this message
-        const user = this.getCurrentUser();
-        message.user = user;
-        this.messages = this.messages.set(id, message);
-        // let's add new message id to current channel->messages.
         const channelId = _.get(message, 'channelId');
         if (channelId) {
             let message_send = _.get(message, 'body');
-            // now send this channel info to the server
             this.callFacebookAPI.sendMessage(channelId, message_send, null).then((response) => {
-                this.update();
+                this.callFacebookAPI.getMessageById(response.data.id, null).then((res) => {
+                    let newMessage = _.get(res, 'data');
+
+                    this.message.onAdd(newMessage, 'inbox');
+
+                    let currentChannel = this.conversations.get(this.activeChannelId);
+
+                    let conversation = {
+                        id: this.activeChannelId,
+                        can_reply: currentChannel.can_reply,
+                        snippet: message.message,
+                        updated_time: new Date().getTime() / 1000,
+                        unread_count: currentChannel.unread + 1,
+                        last_reply: true,
+                        senders: {
+                            data: [
+                                {
+                                    name: currentChannel.senders,
+                                    id: currentChannel.userFbId
+                                }
+                            ]
+                        }
+                    }
+                    this.converstation.onAdd(conversation, 'inbox');
+                }).catch((err) => {
+                    console.log("An error fetching message", err);
+                })
             }).catch((err) => {
                 console.log("An error sending message", err);
             })
@@ -528,17 +534,49 @@ export default class ConversationController {
     }
 
     postComment(id, message = {}) {
-        // we need add user object who is author of this message
-        const user = this.getCurrentUser();
-        message.user = user;
-        this.messages = this.messages.set(id, message);
-        // let's add new message id to current channel->messages.
         const channelId = _.get(message, 'channelId');
         if (channelId) {
             let message_send = _.get(message, 'body');
-            // now send this channel info to the server
-            this.callFacebookAPI.postComment(channelId, message_send, null).then((response) => {
-                this.update();
+            this.callFacebookAPI.postComment(channelId, message_send, null).then(response => {
+                this.callFacebookAPI.getCommentById(response.data.id, null).then((res) => {
+                    let newComment = _.get(res, 'data');
+
+                    this.message.onAdd(newComment, 'comment');
+
+                    let currentChannel = this.conversations.get(this.activeChannelId);
+
+                    let conversation = {
+                        data: [
+                            {
+                                id: this.activeChannelId,
+                                can_comment: 1,
+                                comment_count: 1,
+                                comments: {
+                                    data: [
+                                        {
+                                            created_time: new Date().getTime() / 1000,
+                                            from: {
+                                                id: this.callFacebookAPI.getPageId(),
+                                                created_time: new Date().getTime() / 1000,
+                                            },
+                                            message: message.message
+                                        }
+                                    ]
+                                },
+                                from: {
+                                    name: currentChannel.senders,
+                                    id: currentChannel.userFbId
+                                },
+                                unread_count: 0,
+                                last_reply: true
+                            }
+                        ]
+                    }
+
+                    this.converstation.onAdd(conversation, 'comment');
+                }).catch((err) => {
+                    console.log("An error fetching comment", err);
+                })
             }).catch((err) => {
                 console.log("An error posting comment", err);
             })
@@ -613,6 +651,12 @@ export default class ConversationController {
     resetCursor() {
         this.nextConversation = null;
         this.nextMessage = null;
+    }
+
+    resetChannel() {
+        this.activeChannelId = null;
+        this.activeChannelType = null;
+        this.messages = new OrderedMap();
     }
 
     update() {

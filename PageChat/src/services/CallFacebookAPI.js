@@ -1,10 +1,9 @@
 import axios from 'axios'
 import {apiUrlFb} from '../config/config'
-
 const pageId50k = '158757974724465';
 const limit = '15';
 
-const access_token = 'EAACEdEose0cBAM0zFtHhHZBDPij5VuNdVvMPvLL8QtUVrW4KT8aN2OdBZBKPb32mGMgENtENDGGPsBLDexsa9aOsraqlSD6mWJzDVJQGArnqZBiX3gK5dePfDgLfaQhbv5GfnLlhm3rThTXQyAyqb7VHiXkiiVqAUxFo3OIxwfdLfWxkoWMt8icpDuySl4ZD';
+const access_token = 'EAACEdEose0cBAGaNb8EXkhxlGkCzYVTO4tevWUkXVNHc5FUrOtjBjqZCQwSpKl3UVEpLG3ffXku9EIikMFCtie3lnioV19hIJsyOuUx3uEIJ7fBJa55UNOZCZCKbPpcgRBhNJZBQPIdjZCPrpxHrdirmgoP6YgI0rADmfv70LMRV45xOfJgtcsNlc02h0ZC4aAtbnAxpimAAZDZD';
 
 
 export default class CallFacebookAPI {
@@ -27,19 +26,28 @@ export default class CallFacebookAPI {
 
     getComments(cursor, options = null) {
         if (cursor === null) cursor = '';
-        let fields = 'comments{id,message,from,comment_count,comments,can_comment,created_time,attachment}&date_format=U';
+        let fields = 'comments{id,message,from,comment_count,comments.order(reverse_chronological).limit(1){from,message,created_time},can_comment,created_time,attachment}&date_format=U';
         let endpoint = 'posts?fields=' + fields + '&after=' + cursor + '&access_token=' + access_token;
         let url = `${apiUrlFb}/${pageId50k}/${endpoint}`;
         return axios.get(url, options);
     }
 
     getMessage(conversationId, cursor, options = null) {
-        let endpoint = 'messages?fields=created_time,message,from,to,attachments{image_data,mime_type,name,size,video_data,file_url,id},sticker,id,tags,shares&limit=15'
-            + '&date_format=U&access_token='
-            + access_token;
-        if (cursor != null)
-            endpoint += '&after=' + cursor;
-        let url = `${apiUrlFb}/${conversationId}/${endpoint}`;
+        if (cursor === null) cursor = '';
+        const endpoint = 'messages?fields=created_time,message,from,to,attachments{image_data,mime_type,name,size,video_data,file_url,id},sticker,id,tags,shares&limit=15' + '&after=' + cursor + '&date_format=U&access_token=' +access_token;
+        const url = `${apiUrlFb}/${conversationId}/${endpoint}`;
+        return axios.get(url, options);
+    }
+
+    getMessageById(id, options = null) {
+        const enpoint = 'fields=created_time,from,id,message,sticker,tags,to,attachments{image_data,mime_type,name,size,video_data,id},shares&access_token=' +access_token;
+        const url = `${apiUrlFb}/${id}?${enpoint}`;
+        return axios.get(url, options);
+    }
+
+    getCommentById(id, options = null) {
+        const enpoint = 'access_token=' +access_token;
+        const url = `${apiUrlFb}/${id}?${enpoint}`;
         return axios.get(url, options);
     }
 
@@ -62,7 +70,7 @@ export default class CallFacebookAPI {
 
     sendMessage(conversationId, message, options = null) {
         const url = `${apiUrlFb}/${conversationId}/messages?access_token=${access_token}`;
-        if (typeof message === 'string') {
+        if(typeof message === 'string') {
             const data = {
                 message: message
             }
@@ -74,9 +82,14 @@ export default class CallFacebookAPI {
         }
     }
 
+    subscribeWebhook() {
+        const url = `${apiUrlFb}/${pageId50k}/subscribed_apps`;
+        return axios.post(url, {access_token: access_token});
+    }
+
     postComment(postId, message, options = null) {
         const url = `${apiUrlFb}/${postId}/comments?access_token=${access_token}`;
-        if (typeof message === 'string') {
+        if(typeof message === 'string') {
             const data = {
                 message: message
             }
