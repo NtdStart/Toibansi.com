@@ -13,7 +13,12 @@ export default class ConversationModel {
         if (key==='inbox') {
             id = `${payload.id}`;
             can_reply = `${payload.can_reply}`;
-            snippet = `${payload.snippet}`;
+            if(payload.snippet) {
+                snippet = `${payload.snippet}`;
+            } else {
+                snippet = 'You sent a photo';
+            }
+
             senders = `${payload.senders.data[0].name}`;
             userFbId = `${payload.senders.data[0].id}`;
             updated_time = `${payload.updated_time}`;
@@ -29,6 +34,7 @@ export default class ConversationModel {
                 last_reply: true,
                 unix_time: updated_time,
                 unread: unread,
+                userFbId: userFbId,
                 updated_time: parseUnixTime(updated_time),
             };
             this.converstation.add(id, conversation);
@@ -37,11 +43,11 @@ export default class ConversationModel {
             _.each(payload.data, (c) => {
                 id = `${c.id}`;
                 can_reply = `${c.can_comment}`;
-                last_reply = (c.comment_count>0)? this.checkLastReply(c.comments.data[c.comment_count-1].from.id) : false;
-                snippet = (c.comment_count>0)? c.comments.data[c.comment_count-1].message : c.message;
+                last_reply = (c.comment_count>0)? this.checkLastReply(c.comments.data[0].from.id) : false;
+                snippet = (c.comment_count>0)? c.comments.data[0].message : c.message;
                 senders = `${c.from.name}`;
                 userFbId = `${c.from.id}`;
-                updated_time = (c.comment_count>0)? c.comments.data[c.comment_count-1].created_time : c.created_time;
+                updated_time = (c.comment_count>0)? c.comments.data[0].created_time : c.created_time;
                 avatar = 'https://graph.facebook.com/' + userFbId + '/picture?width=70&height=70';
                 if (typeof c.attachment!=='undefined') snippet = c.attachment.type;
                 let conversation = {
@@ -52,6 +58,7 @@ export default class ConversationModel {
                     can_reply: can_reply,
                     type: 'FBComment',
                     unix_time: updated_time,
+                    userFbId: userFbId,
                     updated_time: parseUnixTime(updated_time),
                     last_reply: last_reply
                 };

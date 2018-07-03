@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import {OrderedMap} from 'immutable'
 import _ from 'lodash'
 import {ObjectID} from '../../helpers/objectid'
+import socketIOClient from 'socket.io-client'
 
 export default class FacebookChat extends Component {
 
@@ -25,8 +26,8 @@ export default class FacebookChat extends Component {
         this.renderAvatars = this.renderAvatars.bind(this);
     }
 
-    renderAvatars(converstation) {
-        return <img src={converstation.avatar} alt={converstation.senders}/>
+    renderAvatars(conversation) {
+        return <img src={conversation.avatar} alt={conversation.senders}/>
     }
 
     renderAvatarPage() {
@@ -35,74 +36,11 @@ export default class FacebookChat extends Component {
     }
 
 
-    renderChatRight() {
-        return (
-            <div className="chat-right">
-                <div className="participant-info-customer">
-                    <div className="participant-info-customer-detail">
-                        Thông tin khách hàng
-                    </div>
-                    <div>
-                        <div className="participant-info-customer-comment border-top">
-                            Lưu ý
-                        </div>
-                    </div>
-                    <div>
-                        <div className="participant-info-customer-sample-message border-top">
-                            <i className="fa fa-list-alt"></i>
-                            <ul className="list-unstyled">
-                                <li className="item">
-                                            <span>
-                                                A check inbox nhé a, nếu không nhận được tin nhắn của shop phiền anh ib cho
-                                                shop ạ. Cám ơn a!
-                                            </span>
-                                </li>
-                                <li className="item">
-                                            <span>
-                                                A cho em chiều cao vs cân nặng em tư vấn size ạ
-                                            </span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div className="participant-info-customer-orders border-top">
-                        Danh sách đơn hàng
-                    </div>
-                </div>
-            </div>
-        )
-    }
-    renderNavigationRight() {
-        return (<nav id="navigation-right">
-            <div className="header">
-                <div id="dismiss">
-                    <i id="fa-align-right" className="fas fa-align-right"></i>
-                </div>
-            </div>
-            <ul className="list-unstyled components">
-                <div className="collapse-left">
-                    <div className="page-avatar active">
-                        {this.renderAvatarPage()}
-                    </div>
-                </div>
-                <div className="collapse-right">
-                </div>
-                <div id="logout">
-                    <a href="/">Thoát</a>
-                </div>
-                <div className="clearfix"/>
-            </ul>
-        </nav>)
-    }
-
-
-    renderTitle(converstation = null) {
-        if (!converstation) {
+    renderTitle(conversation = null) {
+        if (!conversation) {
             return null;
         }
-        return <h2>{converstation.senders}</h2>
+        return <h2>{conversation.senders}</h2>
     }
 
     scrollMessagesToBottom() {
@@ -120,12 +58,27 @@ export default class FacebookChat extends Component {
                     </div>
                 </div>
             )
-        else {
+        else if(message.attachment.data !== undefined) {
+            return (
+                <div>
+                    { message.attachment.data.map( image => {
+                        return (
+                            <div className="message-body" key={image}>
+                                <div className="message-text">
+                                    <img key={image} src={image.image_data.url} height="auto"
+                                         width="100%" alt=""/>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+            )
+        } else if (message.attachment.media) {
             return (
                 <div className="message-body">
                     <div className="message-text">
-                        <img src={message.attachment.media.image.src} height={message.attachment.media.image.height}
-                             width={message.attachment.media.image.width} alt=""/>
+                        <img src={message.attachment.media.image.src} height="auto"
+                             width="100%" alt=""/>
                     </div>
                 </div>
             )
@@ -139,22 +92,31 @@ export default class FacebookChat extends Component {
         if (_.trim(newMessage).length) {
             const messageId = new ObjectID().toString();
             const channel = facebookChat.getActiveConversation();
-            const channelId = _.get(channel, '_id', null);
-            const currentUser = facebookChat.getCurrentUser();
+            const channelId = channel._id;
             const message = {
                 _id: messageId,
-                channelId: channelId,
+                created_time: new Date().getTime() / 1000,
+                message: newMessage,
+                from: {
+                    name: '',
+                    id: facebookChat.callFacebookAPI.getPageId()
+                },
+                channelId: facebookChat.activeChannelId,
                 body: newMessage,
-                userId: _.get(currentUser, '_id'),
                 me: true,
             };
-            facebookChat.addMessage(messageId, message);
+
+            if(channelId.charAt(0) === 't') {
+                facebookChat.sendMessage(messageId, message);
+            } else {
+                facebookChat.postComment(messageId, message);
+            }
+
             this.setState({
                 newMessage: '',
             })
         }
     }
-
     sendPhoto(event, props) {
         const file = event.target.files[0];
         const {facebookChat} = props;
@@ -162,7 +124,7 @@ export default class FacebookChat extends Component {
         const messageId = new ObjectID().toString();
         const currentUser = facebookChat.getCurrentUser();
         const channel = facebookChat.getActiveConversation();
-        const channelId = _.get(channel, '_id', null);
+        const channelId = channel._id;
         const message = {
             _id: messageId,
             channelId: channelId,
@@ -171,13 +133,12 @@ export default class FacebookChat extends Component {
             me: true,
         };
 
-        if (channelId.charAt(0) === 't') {
+        if(channelId.charAt(0) === 't') {
             facebookChat.sendMessage(messageId, message);
         } else {
             facebookChat.postComment(messageId, message);
         }
     }
-
     _onResize() {
         this.setState({
             height: window.innerHeight
@@ -204,12 +165,17 @@ export default class FacebookChat extends Component {
     componentWillReceiveProps(nextProps) {
         const {facebookChat} = nextProps;
         this.getDataMess(facebookChat);
-        console.log('Component Will Receive Props!')
+        // console.log('Component Will Receive Props!')
     }
 
     componentDidMount() {
         // console.log('Component DID MOUNT!')
         window.addEventListener('resize', this._onResize);
+
+        let {facebookChat} = this.props;
+
+        // const socket = socketIOClient("http://127.0.0.1:3030");
+        // socket.emit('subscribe', {pageId: facebookChat.pageId})
     }
 
     componentWillUnmount() {
@@ -252,8 +218,10 @@ export default class FacebookChat extends Component {
 
     setActiveTab(type) {
         if (this.state.activeTab === type) return false;
+        this.setState({messages: new OrderedMap()})
         const {facebookChat} = this.props;
         facebookChat.conversations = new OrderedMap();
+        facebookChat.resetChannel();
         facebookChat.resetCursor();
         switch (type) {
             case 1:
@@ -278,13 +246,19 @@ export default class FacebookChat extends Component {
 
 
     render() {
+        // const socket = socketIOClient("http://127.0.0.1:3030");
         const {facebookChat} = this.props;
         const {height, activeTab} = this.state;
         const style = {
             height: height,
         };
         const activeChannel = facebookChat.getActiveConversation();
+        const activeChannelId = (activeChannel)? activeChannel._id : '';
         const conversations = facebookChat.getConversations();
+
+        // socket.on(facebookChat.pageId, (data) => {
+        //     facebookChat.handleSocket(data)
+        // })
 
         function renderIcon(reply) {
             if (reply) {
@@ -297,7 +271,24 @@ export default class FacebookChat extends Component {
         return (
             <div style={style} className="app-messenger">
                 <div className="overlay"></div>
-                {this.renderNavigationRight()}
+                <nav id="sidebar">
+                    <div className="sidebar-header">
+                        <div id="dismiss">
+                            <i id="fa-align-right" className="fas fa-align-right"></i>
+                        </div>
+                    </div>
+                    <ul className="list-unstyled components">
+                        <div className="sidebar-collap-left">
+                            <div className="page-avatar active">
+                                {this.renderAvatarPage()}
+                            </div>
+                        </div>
+                        <div className="sidebar-collap-right">
+                        </div>
+                        <div className="clearfix"/>
+                    </ul>
+                </nav>
+
                 <div className="header">
                     <div className="content">
                         {this.renderTitle(activeChannel)}
@@ -305,8 +296,8 @@ export default class FacebookChat extends Component {
                     <div className="right">
                     </div>
                 </div>
-                <div className="chat">
-                    <div className="chat-left">
+                <div className="main">
+                    <div className="sidebar-left">
                         <div className="fb-wrap-bar-search">
                             <div className="fb-chat-action-bar">
                                 <div className="fb-chat-menu">
@@ -355,7 +346,7 @@ export default class FacebookChat extends Component {
                                     <div onClick={(key) => {
                                         facebookChat.setActiveConversation(conversation._id, conversation.type);
                                     }} key={conversation._id}
-                                         className={classNames('conversation', {'notify': _.get(conversation, 'notify') === true}, {'active': _.get(activeChannel, '_id') === _.get(conversation, '_id', null)})}>
+                                         className={classNames('conversation',{'unread': conversation.unread>0}, {'notify': _.get(conversation, 'notify') === true}, {'active': conversation._id==activeChannelId})}>
                                         <div className="user-image">
                                             {this.renderAvatars(conversation)}
                                         </div>
@@ -369,7 +360,7 @@ export default class FacebookChat extends Component {
                                             <i className="fa fa-clock-o"></i>
                                             <span>{conversation.updated_time}</span>
                                             <div>
-                                                {
+                                                <p>   {
                                                     function (type) {
                                                         if (type === 'FBMessage') {
                                                             return (
@@ -382,6 +373,21 @@ export default class FacebookChat extends Component {
                                                         }
                                                     }(conversation.type)
                                                 }
+                                                </p>
+                                                <p>  {
+                                                    function (unread) {
+                                                        if (unread>0) {
+                                                            return (
+                                                                <i className="unread fas fa-circle"></i>
+                                                            )
+                                                        } else {
+                                                            return (
+                                                                <i className="unread far fa-circle"></i>
+                                                            )
+                                                        }
+                                                    }(conversation.unread)
+                                                }
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -389,7 +395,7 @@ export default class FacebookChat extends Component {
                             })}
                         </div>
                     </div>
-                    <div className="chat-messages">
+                    <div className="content">
                         <div className="conversation-tags">
                             <i className="fa fa-tags"></i>
                         </div>
@@ -406,6 +412,8 @@ export default class FacebookChat extends Component {
                                 )
                             }) : null}
                         </div>
+
+
                         {<div className="messenger-input">
                             <div className="facebook tags">
                                 <div className="item">Đã tạo</div>
@@ -434,12 +442,11 @@ export default class FacebookChat extends Component {
                                     <p>Kho hình ảnh</p>
                                 </div>
                                 <div className="item">
-                                    <input ref={input => this.inputElement = input} type="file" className={'hide'}
-                                           onChange={(event) => {
-                                               this.sendPhoto(event, this.props);
-                                           }}/>
+                                    <input ref={input => this.inputElement = input}  type="file" className={'hide'} onChange={(event) => {
+                                        this.sendPhoto(event, this.props);
+                                    }}/>
                                     <div className="label_input"
-                                         onClick={() => this.inputElement.click()}
+                                         onClick={()=>this.inputElement.click()}
                                     >
                                         <i className="fa fa-upload"></i>
                                         <p>Tải hình mới</p>
@@ -447,8 +454,43 @@ export default class FacebookChat extends Component {
                                 </div>
                             </div>
                         </div>}
+
                     </div>
-                    {this.renderChatRight()}
+                    <div className="sidebar-right">
+                        <div className="participant-info-customer">
+                            <div className="participant-info-customer-detail">
+                                Thông tin khách hàng
+                            </div>
+                            <div>
+                                <div className="participant-info-customer-comment border-top">
+                                    Lưu ý
+                                </div>
+                            </div>
+                            <div>
+                                <div className="participant-info-customer-sample-message border-top">
+                                    <i className="fa fa-list-alt"></i>
+                                    <ul className="list-unstyled">
+                                        <li className="item">
+                                            <span>
+                                                A check inbox nhé a, nếu không nhận được tin nhắn của shop phiền anh ib cho
+                                                shop ạ. Cám ơn a!
+                                            </span>
+                                        </li>
+                                        <li className="item">
+                                            <span>
+                                                A cho em chiều cao vs cân nặng em tư vấn size ạ
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="participant-info-customer-orders border-top">
+                                Danh sách đơn hàng
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
