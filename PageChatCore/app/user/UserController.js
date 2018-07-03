@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
-
-
+var jwt    = require('jsonwebtoken');
 
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
@@ -53,6 +52,8 @@ router.put('/:id', function (req, res) {
         res.status(200).send(user);
     });
 });
+
+
 
 
 module.exports = router;
