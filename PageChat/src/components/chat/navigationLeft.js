@@ -61,6 +61,12 @@ export default class navigationLeft extends Component {
                         <div className="page-avatar active">
                             {this.renderAvatarPage()}
                         </div>
+                        <div className="page-avatar">
+                            {this.renderAvatarPage()}
+                        </div>
+                        <div className="page-avatar">
+                            {this.renderAvatarPage()}
+                        </div>
                     </div>
                     <div className="collapse-right">
                     </div>
