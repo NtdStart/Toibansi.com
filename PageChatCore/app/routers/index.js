@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
-
-
+var userController = require('../controller/UserController');
+var logger = require('../logger');
 var superSecret = '123@abc';
 
 
@@ -12,49 +12,52 @@ var mapRouter = [
 ]
 
 
-router.use(function (req, res, next) {
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+// router.use(function (req, res, next) {
+//     // Website you wish to allow to connect
+//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+//     // Request methods you wish to allow
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//     // Request headers you wish to allow
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//     // Set to true if you need the website to include cookies in the requests sent
+//     // to the API (e.g. in case you use sessions)
+//     res.setHeader('Access-Control-Allow-Credentials', true);
+//     console.log(req.originalUrl)
+//     if (mapRouter.includes(req.originalUrl)) {
+//         next()
+//     } else {
+//         let token = req.query.token || req.body.token || req.headers['token'] || undefined
+//         if (token) {
+//             // verifies secret and checks exp
+//             jwt.verify(token, superSecret, function (err, decoded) {
+//                 if (err) {
+//                     return res.json({success: false, message: 'Failed to authenticate token.'});
+//                 } else {
+//                     // if everything is good, save to request for use in other routes
+//                     req.decoded = decoded; //log data decoded
+//                     console.log(decoded)
+//                     next();
+//                 }
+//             });
+//         } else {
+//             // if there is no token
+//             // return an error
+//             return res.status(403).json({
+//                 success: false,
+//                 message: 'No token provided.'
+//             });
+//
+//         }
+//     }
+// })
 
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+router.use('/user', userController);
+// router.use('/tag', tagController);
+// router.use('/order', orderController);
+// router.use('/search', searchController);
 
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
 
-    console.log('da vao')
-    console.log(req.originalUrl)
-    if (mapRouter.includes(req.originalUrl)) {
-        next()
-    } else {
-        let token = req.query.token || req.body.token || req.headers['token'] || undefined
-        if (token) {
-            // verifies secret and checks exp
-            jwt.verify(token, superSecret, function (err, decoded) {
-                if (err) {
-                    return res.json({success: false, message: 'Failed to authenticate token.'});
-                } else {
-                    // if everything is good, save to request for use in other routes
-                    req.decoded = decoded; //log data decoded
-                    console.log(decoded)
-                    next();
-                }
-            });
-        } else {
-            // if there is no token
-            // return an error
-            return res.status(403).json({
-                success: false,
-                message: 'No token provided.'
-            });
-
-        }
-    }
-})
 //Tuan add: Find One user to username and passs
 router.post('/login', (req, res) => {
     let email = req.body.email
@@ -109,5 +112,4 @@ router.post('/login', (req, res) => {
     // })
 })
 
-//
 module.exports = router;

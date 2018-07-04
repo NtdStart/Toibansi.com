@@ -27,7 +27,7 @@ export default class Home extends Component {
             email: this.state.email,
             pass: this.state.password
         };
-        this.service.post('login', data)
+        this.service.post('user', data)
             .then(response => {
                 let obj = response.data
                 if (obj.code === 1) {

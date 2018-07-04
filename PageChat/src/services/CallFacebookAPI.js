@@ -34,8 +34,8 @@ export default class CallFacebookAPI {
 
     getMessage(conversationId, cursor, options = null) {
         if (cursor === null) cursor = '';
-        const endpoint = 'messages?fields=created_time,message,from,to,attachments{image_data,mime_type,name,size,video_data,file_url,id},sticker,id,tags,shares&limit=15' + '&after=' + cursor + '&date_format=U&access_token=' +access_token;
-        const url = `${apiUrlFb}/${conversationId}/${endpoint}`;
+        let endpoint = 'messages?fields=created_time,message,from,to,attachments{image_data,mime_type,name,size,video_data,file_url,id},sticker,id,tags,shares&limit=15' + '&after=' + cursor + '&date_format=U&access_token=' +access_token;
+        let url = `${apiUrlFb}/${conversationId}/${endpoint}`;
         return axios.get(url, options);
     }
 
