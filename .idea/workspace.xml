@@ -31,6 +31,18 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="CallFacebookAPI.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/PageChat/src/services/CallFacebookAPI.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="42" column="39" lean-forward="true" selection-start-line="42" selection-start-column="39" selection-end-line="42" selection-end-column="39" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="chatBoxRight.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/chatBoxRight.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -49,7 +61,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="collapsiblesidebar.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="collapsiblesidebar.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PageChat/src/helpers/collapsiblesidebar.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
@@ -161,13 +173,13 @@
         <option value="$PROJECT_DIR$/PageChatCore/server.js" />
         <option value="$PROJECT_DIR$/PageChat/src/index.js" />
         <option value="$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js" />
-        <option value="$PROJECT_DIR$/PageChat/src/services/CallFacebookAPI.js" />
         <option value="$PROJECT_DIR$/PageChat/src/components/home.js" />
         <option value="$PROJECT_DIR$/PageChatCore/app/index.js" />
         <option value="$PROJECT_DIR$/PageChatCore/app/controller/UserController.js" />
         <option value="$PROJECT_DIR$/PageChatCore/app/routers/index.js" />
         <option value="$PROJECT_DIR$/PageChat/src/components/chat/navigationLeft.js" />
         <option value="$PROJECT_DIR$/PageChat/src/helpers/collapsiblesidebar.js" />
+        <option value="$PROJECT_DIR$/PageChat/src/services/CallFacebookAPI.js" />
       </list>
     </option>
   </component>
@@ -370,12 +382,12 @@
       <workItem from="1530337025330" duration="2143000" />
       <workItem from="1530339211098" duration="2435000" />
       <workItem from="1530703163772" duration="1971000" />
-      <workItem from="1530709783485" duration="4960000" />
+      <workItem from="1530709783485" duration="5265000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137731000" />
+    <option name="totallyTimeSpent" value="138036000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -605,16 +617,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PageChat/src/services/CallFacebookAPI.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="55" column="60" lean-forward="true" selection-start-line="55" selection-start-column="60" selection-end-line="55" selection-end-column="60" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/services/service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -663,16 +665,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="618">
-          <caret line="276" column="25" selection-start-line="276" selection-start-column="25" selection-end-line="276" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/chatBoxRight.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -691,6 +683,26 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="47" lean-forward="true" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="618">
+          <caret line="276" column="25" selection-start-line="276" selection-start-column="25" selection-end-line="276" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PageChat/src/services/CallFacebookAPI.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="42" column="39" lean-forward="true" selection-start-line="42" selection-start-column="39" selection-end-line="42" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
