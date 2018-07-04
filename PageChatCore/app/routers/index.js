@@ -1,16 +1,16 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
-var User = require('../user/User');
-var superSecret = '123@abc'
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
+
+
+var superSecret = '123@abc';
+
 
 // Những router không cần check token
 var mapRouter = [
     '/login'
 ]
+
 
 router.use(function (req, res, next) {
     // Website you wish to allow to connect
@@ -36,7 +36,7 @@ router.use(function (req, res, next) {
             // verifies secret and checks exp
             jwt.verify(token, superSecret, function (err, decoded) {
                 if (err) {
-                    return res.json({ success: false, message: 'Failed to authenticate token.' });
+                    return res.json({success: false, message: 'Failed to authenticate token.'});
                 } else {
                     // if everything is good, save to request for use in other routes
                     req.decoded = decoded; //log data decoded
@@ -45,7 +45,6 @@ router.use(function (req, res, next) {
                 }
             });
         } else {
-            
             // if there is no token
             // return an error
             return res.status(403).json({
@@ -57,25 +56,25 @@ router.use(function (req, res, next) {
     }
 })
 //Tuan add: Find One user to username and passs
-router.post('/login',(req,res)=>{
+router.post('/login', (req, res) => {
     let email = req.body.email
-    let pass     = req.body.pass
-    if(email === 'a5wap123@gmail.com' && pass === '123456'){
+    let pass = req.body.pass
+    if (email === 'a5wap123@gmail.com' && pass === '123456') {
         const payload = {
             email: email
-          };
-          let token = jwt.sign({
+        };
+        let token = jwt.sign({
             exp: Math.floor(Date.now() / 1000) + (60 * 60),
             payload
-          }, superSecret);
-            res.status(200).json({
-              code: 1,
-              mgs: 'Enjoy your token!',
-              data:token
-            });
+        }, superSecret);
+        res.status(200).json({
+            code: 1,
+            mgs: 'Enjoy your token!',
+            data: token
+        });
     }
-    else{
-        res.status(403).json({ code: -1, mgs: 'User not found.' ,data:null});
+    else {
+        res.status(403).json({code: -1, mgs: 'User not found.', data: null});
     }
 
 

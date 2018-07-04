@@ -29,10 +29,10 @@ a:focus {
 }
 
 /* ---------------------------------------------------
-    navigation-right STYLE
+    navigation-left STYLE
 ----------------------------------------------------- */
 
-#navigation-right {
+#navigation-left {
     width: 52px;
     position: fixed;
     top: 0;
@@ -55,7 +55,7 @@ a:focus {
     float: left;
 }
 
-.navigation-right-collapse {
+.navigation-left-collapse {
     width: 200px !important;
     position: fixed;
     top: 0;
@@ -69,7 +69,7 @@ a:focus {
     left: 0;
 }
 
-.close-navigation-right {
+.close-navigation-left {
     display: none;
 }
 
@@ -87,7 +87,7 @@ a:focus {
     background: #fff;
 }
 
-#navigation-right.active {
+#navigation-left.active {
     left: 0;
 }
 
@@ -140,33 +140,33 @@ a:focus {
     opacity: 1;
 }
 
-#navigation-right .header {
+#navigation-left .header {
     padding: 25px;
     background: #738693;
 }
 
-#navigation-right ul.components {
+#navigation-left ul.components {
     padding: 20px 0;
     border-bottom: 1px solid #47748b;
 }
 
-#navigation-right ul p {
+#navigation-left ul p {
     color: #fff;
     padding: 10px;
 }
 
-#navigation-right ul li a {
+#navigation-left ul li a {
     padding: 10px;
     font-size: 1.1em;
     display: block;
 }
 
-#navigation-right ul li a:hover {
+#navigation-left ul li a:hover {
     color: #738693;
     background: #fff;
 }
 
-#navigation-right ul li.active > a,
+#navigation-left ul li.active > a,
 a[aria-expanded="true"] {
     color: #fff;
     background: #6d7fcc;

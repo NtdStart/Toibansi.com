@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
-import { Redirect } from 'react-router-dom'
 import  Service  from '../services/service'
 export default class Home extends Component {
 
