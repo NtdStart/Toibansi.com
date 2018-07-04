@@ -40,11 +40,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="navigationLeft.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="navigationLeft.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/navigationLeft.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
+            <state relative-caret-position="527">
+              <caret line="63" column="53" lean-forward="true" selection-start-line="63" selection-start-column="53" selection-end-line="63" selection-end-column="53" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="collapsiblesidebar.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/PageChat/src/helpers/collapsiblesidebar.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="47" lean-forward="true" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -60,8 +69,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Send</find>
-      <find>channe</find>
       <find>conversation-snippet</find>
       <find>chanels</find>
       <find>chanel</find>
@@ -88,8 +95,10 @@
       <find>getInitialState</find>
       <find>collapse-left</find>
       <find>bodyParser</find>
-      <find>facebookChat</find>
       <find>.collapse-left</find>
+      <find>facebookChat</find>
+      <find>#navigation-left</find>
+      <find>right</find>
     </findStrings>
     <replaceStrings>
       <replace>facebookChat</replace>
@@ -99,6 +108,7 @@
       <replace>chat</replace>
       <replace>chat-messages</replace>
       <replace>navigation-right</replace>
+      <replace>left</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -134,7 +144,6 @@
         <option value="$PROJECT_DIR$/PageChat/src/statics/css/app.css" />
         <option value="$PROJECT_DIR$/PageChat/src/statics/css/chat.css" />
         <option value="$PROJECT_DIR$/PageChat/src/statics/css/collapsiblesidebar.css" />
-        <option value="$PROJECT_DIR$/PageChat/src/helpers/collapsiblesidebar.js" />
         <option value="$PROJECT_DIR$/FanpageIntegrate/src/css/chat.css" />
         <option value="$PROJECT_DIR$/FanpageIntegrate/src/index.js" />
         <option value="$PROJECT_DIR$/FanpageIntegrate/src/support.js" />
@@ -158,6 +167,7 @@
         <option value="$PROJECT_DIR$/PageChatCore/app/controller/UserController.js" />
         <option value="$PROJECT_DIR$/PageChatCore/app/routers/index.js" />
         <option value="$PROJECT_DIR$/PageChat/src/components/chat/navigationLeft.js" />
+        <option value="$PROJECT_DIR$/PageChat/src/helpers/collapsiblesidebar.js" />
       </list>
     </option>
   </component>
@@ -234,6 +244,13 @@
               <item name="PageChat" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Toibansi.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Toibansi.com" type="462c0819:PsiDirectoryNode" />
+              <item name="PageChat" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="helpers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Toibansi.com" type="b2602c69:ProjectViewProjectNode" />
@@ -353,12 +370,12 @@
       <workItem from="1530337025330" duration="2143000" />
       <workItem from="1530339211098" duration="2435000" />
       <workItem from="1530703163772" duration="1971000" />
-      <workItem from="1530709783485" duration="4541000" />
+      <workItem from="1530709783485" duration="4960000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137312000" />
+    <option name="totallyTimeSpent" value="137731000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -484,13 +501,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="746">
           <caret line="71" selection-start-line="71" selection-end-line="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PageChat/src/helpers/collapsiblesidebar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>
@@ -672,8 +682,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/navigationLeft.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
+        <state relative-caret-position="527">
+          <caret line="63" column="53" lean-forward="true" selection-start-line="63" selection-start-column="53" selection-end-line="63" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PageChat/src/helpers/collapsiblesidebar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="47" lean-forward="true" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
         </state>
       </provider>
     </entry>
