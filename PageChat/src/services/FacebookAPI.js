@@ -1,13 +1,14 @@
 import axios from 'axios'
 import {apiUrlFb} from '../config/config'
 
-const pageId50k = '158757974724465';
+// const pageId50k = '158757974724465';
+const pageId50k = '598135600563114';
 const limit = '15';
 
-const access_token = 'EAAc4hc2H1NcBABciYQf2VT99ZBt5ur05eNsFG1vXC95kXqjj4AoJnUh7Dps8XkCZANbIeffUxBWFlQS7gZCzGRO0uqnEdAgFTfgxpgkk9HFTJIHxSXNHgeTxS88zktr6EqSwpKG8EvtolGZAwEZBZBgBByISX780KCl3xPZASK2FFT7WrWqq3NhMOZBe0NnmSYJSHKuNrZAdwCQZDZD';
+const access_token = 'EAAc4hc2H1NcBANZCZAL4ndGw2rUg0iu4JuGemhIEaB8ZCsJsxiaL0CMfJj5jLW2EwNF43by2ZBaafM3JbwEHLtbccHKnqqCtP0hTYqlFiTYwbTq8mkZAH3Mfq2mZArlwFtn569aOdcB3gF1VCFwTcHqHe5kZBaZC7ZCUoLvaI9yYAAJMFW9XZAZCrKCKPedpUtbxXITKVjQA6yErQZDZD';
 
 
-export default class CallFacebookAPI {
+export default class FacebookAPI {
 
     getConversations(cursor, options = null) {
         if (cursor === null) cursor = '';

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import ConversationController from '../../controller/ConverstationController'
+import ConversationController from '../../controller/ConversationController'
 import FacebookChat from './facebookChat'
 import {collapsiblesidebar} from "../../helpers/collapsiblesidebar";
 

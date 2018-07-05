@@ -8,8 +8,6 @@ import ChatBoxRight from './chatBoxRight'
 import NavigationLeft from './navigationLeft'
 
 
-
-
 export default class FacebookChat extends Component {
 
     constructor(props) {
@@ -42,7 +40,16 @@ export default class FacebookChat extends Component {
         if (!conversation) {
             return null;
         }
-        return <h2>{conversation.senders}</h2>
+        return <h4>{conversation.senders}</h4>
+    }
+
+    renderViewOnFb(userId = null) {
+        if (!userId) {
+            return null;
+        }
+        let linkFb = 'https://www.facebook.com/' + userId;
+        return <a title="Xem facebook" alt="Xem facebook" target="_blank" href={linkFb}> <i
+            className="fab fa-facebook-f"></i> </a>
     }
 
     scrollMessagesToBottom() {
@@ -62,14 +69,12 @@ export default class FacebookChat extends Component {
             )
         else if (message.attachment.data !== undefined) {
             return (
-                <div>
+                <div className="message-body">
                     {message.attachment.data.map(image => {
                         return (
-                            <div className="message-body" key={image}>
-                                <div className="message-text">
-                                    <img key={image} src={image.image_data.url} height="auto"
-                                         width="100%" alt=""/>
-                                </div>
+                            <div className="message-attack">
+                                <img key={image} src={image.image_data.url} width="50%"
+                                     alt=""/>
                             </div>
                         )
                     })}
@@ -78,9 +83,9 @@ export default class FacebookChat extends Component {
         } else if (message.attachment.media) {
             return (
                 <div className="message-body">
-                    <div className="message-text">
-                        <img src={message.attachment.media.image.src} height="auto"
-                             width="100%" alt=""/>
+                    <div className="message-attack">
+                        <img src={message.attachment.media.image.src}
+                             width="50%" alt=""/>
                     </div>
                 </div>
             )
@@ -256,6 +261,7 @@ export default class FacebookChat extends Component {
             height: height,
         };
         const activeChannel = facebookChat.getActiveConversation();
+        const activeUserId = facebookChat.getActiveUser();
         const activeChannelId = (activeChannel) ? activeChannel._id : '';
         const conversations = facebookChat.getConversations();
 
@@ -276,8 +282,8 @@ export default class FacebookChat extends Component {
                 <div className="overlay"></div>
                 <NavigationLeft navLeft={NavigationLeft}/>
                 <div className="header">
-                    <div className="content">
-                        {this.renderTitle(activeChannel)}
+                    <div className="left"></div>
+                    <div className="main">
                     </div>
                     <div className="right">
                     </div>
@@ -382,6 +388,14 @@ export default class FacebookChat extends Component {
                         </div>
                     </div>
                     <div className="chat-messages">
+                        <div className="conversation-header">
+                            <div className="name-conversation">
+                                {this.renderTitle(activeChannel)}
+                            </div>
+                            <div className="view-profile-fb">
+                                {this.renderViewOnFb(activeUserId)}
+                            </div>
+                        </div>
                         <div className="conversation-tags">
                             <i className="fa fa-tags"></i>
                         </div>

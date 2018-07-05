@@ -13,7 +13,7 @@
 }
 
 .app-messenger .header .left {
-    width: 300px;
+    width: 365px;
     position: relative;
 }
 
@@ -55,13 +55,13 @@
 }
 
 .app-messenger .header .right {
-    width: 300px;
+    width: 350px;
 }
 
 .app-messenger .header .right .user-bar {
     line-height: 50px;
     display: flex;
-    justify-chat-messages: flex-end;
+    justify-content: flex-end;
     padding: 0 10px;
 }
 
@@ -191,7 +191,7 @@ textarea.form-control {
 .messages .message {
     display: flex;
     flex-direction: row;
-    justify-chat-messages: flex-start;
+    justify-content: flex-start;
     margin: 15px;
 }
 
@@ -205,20 +205,30 @@ textarea.form-control {
     background-color: #ececec;
     border-radius: 10px;
     margin-left: 5px;
+    max-width: 80%;
 }
 
 .messages .message .message-body .message-text {
-    padding: 10px;
-    border-radius: 10px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.messages .message .message-body .message-attack {
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.messages .message .message-body .message-attack img {
+    width: 50%;
 }
 
 .messages .message.me {
-    justify-chat-messages: flex-end;
+    justify-content: flex-end;
     position: relative;
 }
 
 .messages .message.me .message-user-image {
-    justify-chat-messages: flex-end;
+    justify-content: flex-end;
     float: right;
     position: absolute;
 }
@@ -229,9 +239,12 @@ textarea.form-control {
     margin-right: 35px;
 }
 
+.messages .message.me .message-body .message-attack img {
+    width: 50%;
+}
+
 .messages .message.me .message-body .message-text {
     color: #FFF;
-    margin-right: 40px;
 }
 
 .conversations {
@@ -265,7 +278,7 @@ textarea.form-control {
 }
 
 .conversations .conversation .user-image {
-    width: 80px;
+    width: 100px;
 }
 
 .conversations .conversation .user-image img {
@@ -564,7 +577,7 @@ h2.title {
 .user-bar .user-form .form-actions {
     display: flex;
     flex-direction: row;
-    justify-chat-messages: flex-end;
+    justify-content: flex-end;
 }
 
 .user-bar .user-menu {
@@ -732,6 +745,25 @@ h2.title {
     padding-right: 3px;
 }
 
+.conversation-header {
+    font-weight: bold;
+    height: 40px;
+    padding: 5px 15px;
+    border-bottom: 1px solid #ebeef0 !important;
+}
+
+.conversation-header .name-conversation {
+    float: left;
+    color: #a9b7c3;
+}
+
+.conversation-header .view-profile-fb {
+    float: left;
+    color: #4267b2;
+    margin-left: 20px;
+    padding: 6px;
+}
+
 .conversation-tags {
     font-size: 12px;
     height: 39px;
@@ -814,15 +846,15 @@ h2.title {
     cursor: pointer;
 }
 
-
 .conversation-right p {
     margin-bottom: 0;
     text-align: right;
 }
 
-.conversation-right .unread{
+.conversation-right .unread {
     font-size: 10px;
 }
+
 .conversation.unread {
     background-color: #ddd;
 }
