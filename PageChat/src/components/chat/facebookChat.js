@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
 import classNames from 'classnames'
-import {OrderedMap} from 'immutable'
 import _ from 'lodash'
 import {ObjectID} from '../../helpers/objectid'
-
 import ChatBoxRight from './chatBoxRight'
 import NavigationLeft from './navigationLeft'
+import {OrderedMap} from "immutable";
 
 
 export default class FacebookChat extends Component {
@@ -16,12 +15,13 @@ export default class FacebookChat extends Component {
         new NavigationLeft(this);
         this.state = {
             height: window.innerHeight,
-            messages: new OrderedMap(),
+            messagesArray: {},
             activeTab: 1,
             pageId: '598135600563114',
             pageName: '50K',
             newMessage: ''
         }
+        this.messagesArray = new OrderedMap();
         this.firstPage = true;
         this._onResize = this._onResize.bind(this);
         this.handleSend = this.handleSend.bind(this);
@@ -72,8 +72,8 @@ export default class FacebookChat extends Component {
                 <div className="message-body">
                     {message.attachment.data.map(image => {
                         return (
-                            <div className="message-attack">
-                                <img key={image} src={image.image_data.url} width="50%"
+                            <div key={image.id} className="message-attack">
+                                <img src={image.image_data.url} width="50%"
                                      alt=""/>
                             </div>
                         )
@@ -163,24 +163,14 @@ export default class FacebookChat extends Component {
     componentWillUpdate() {
     }
 
-    getDataMess(facebookChat) {
-        const messages = facebookChat.getMessages();
-        if (messages.size > 0)
-            this.setState({
-                messages: messages
-            });
-    }
 
     componentWillReceiveProps(nextProps) {
-        const {facebookChat} = nextProps;
-        this.getDataMess(facebookChat);
-        // console.log('Component Will Receive Props!')
+        console.log('Component Will Receive Props!')
     }
 
     componentDidMount() {
         // console.log('Component DID MOUNT!')
         window.addEventListener('resize', this._onResize);
-
         // let {facebookChat} = this.props;
         // const socket = socketIOClient("http://127.0.0.1:3030");
         // socket.emit('subscribe', {pageId: facebookChat.pageId})
@@ -197,7 +187,7 @@ export default class FacebookChat extends Component {
         if (scrollHeight > 0 && scrollHeight - offsetHeight - scrollTop < 50 && !facebookChat.isLoading && facebookChat.nextConversation !== null) {
             switch (this.state.activeTab) {
                 case 1:
-                    facebookChat.fetchConversationAndComment();
+                    // facebookChat.fetchConversationAndComment();
                     break;
                 case 2:
                     facebookChat.fetchConversations();
@@ -226,14 +216,12 @@ export default class FacebookChat extends Component {
 
     setActiveTab(type) {
         if (this.state.activeTab === type) return false;
-        this.setState({messages: new OrderedMap()})
         const {facebookChat} = this.props;
-        facebookChat.conversations = new OrderedMap();
         facebookChat.resetChannel();
         facebookChat.resetCursor();
         switch (type) {
             case 1:
-                facebookChat.fetchConversationAndComment();
+                // facebookChat.fetchConversationAndComment();
                 break;
             case 2:
                 facebookChat.fetchConversations();
@@ -264,6 +252,9 @@ export default class FacebookChat extends Component {
         const activeUserId = facebookChat.getActiveUser();
         const activeChannelId = (activeChannel) ? activeChannel._id : '';
         const conversations = facebookChat.getConversations();
+        this.messagesArray = facebookChat.getMessages(activeChannelId);
+        if (this.messagesArray !== undefined)
+            this.messagesArray = this.messagesArray.sort((a, b) => a.created_time > b.created_time);
 
         // socket.on(facebookChat.pageId, (data) => {
         //     facebookChat.handleSocket(data)
@@ -401,7 +392,7 @@ export default class FacebookChat extends Component {
                         </div>
                         <div ref={(ref) => this.messagesRef = ref} onScroll={this.handleScrollMessage.bind(this)}
                              className="messages">
-                            {this.state.messages.size > 0 ? this.state.messages.map((message, index) => {
+                            {this.messagesArray !== undefined ? this.messagesArray.map((message, index) => {
                                 return (
                                     <div key={index} className={classNames('message', {'me': message.me})}>
                                         <div className="message-user-image">

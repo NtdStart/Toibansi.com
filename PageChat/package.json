@@ -29,6 +29,7 @@
     "sw-precache": "^4.2.2",
     "unicode": "^9.0.1",
     "url-loader": "^0.6.2",
+    "hashmap": "git://github.com/flesler/hashmap.git",
     "ws": "^5.2.0"
   },
   "devDependencies": {

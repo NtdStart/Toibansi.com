@@ -3,17 +3,17 @@ import {parseUnixTime} from '../helpers/functions.js';
 
 export default class ConversationModel {
 
-    constructor(converstation) {
-        this.converstation = converstation;
+    constructor(appComponent) {
+        this.appComponent = appComponent;
         this.pageId = null;
     }
 
     onAdd(payload, key) {
         let id, can_reply, snippet, senders, userFbId, avatar, updated_time, last_reply, unread;
-        if (key==='inbox') {
+        if (key === 'inbox') {
             id = `${payload.id}`;
             can_reply = `${payload.can_reply}`;
-            if(payload.snippet) {
+            if (payload.snippet) {
                 snippet = `${payload.snippet}`;
             } else {
                 snippet = 'You sent a photo';
@@ -37,19 +37,19 @@ export default class ConversationModel {
                 userFbId: userFbId,
                 updated_time: parseUnixTime(updated_time),
             };
-            this.converstation.add(id, conversation);
+            this.appComponent.addConversation(id, conversation);
         }
-        if (key==='comment') {
+        if (key === 'comment') {
             _.each(payload.data, (c) => {
                 id = `${c.id}`;
                 can_reply = `${c.can_comment}`;
-                last_reply = (c.comment_count>0)? this.checkLastReply(c.comments.data[0].from.id) : false;
-                snippet = (c.comment_count>0)? c.comments.data[0].message : c.message;
+                last_reply = (c.comment_count > 0) ? this.checkLastReply(c.comments.data[0].from.id) : false;
+                snippet = (c.comment_count > 0) ? c.comments.data[0].message : c.message;
                 senders = `${c.from.name}`;
                 userFbId = `${c.from.id}`;
-                updated_time = (c.comment_count>0)? c.comments.data[0].created_time : c.created_time;
+                updated_time = (c.comment_count > 0) ? c.comments.data[0].created_time : c.created_time;
                 avatar = 'https://graph.facebook.com/' + userFbId + '/picture?width=70&height=70';
-                if (typeof c.attachment!=='undefined') snippet = c.attachment.type;
+                if (typeof c.attachment !== 'undefined') snippet = c.attachment.type;
                 let conversation = {
                     _id: id,
                     snippet: snippet,
@@ -62,7 +62,7 @@ export default class ConversationModel {
                     updated_time: parseUnixTime(updated_time),
                     last_reply: last_reply
                 };
-                this.converstation.add(id, conversation);
+                this.appComponent.add(id, conversation);
             });
         }
     }
@@ -75,21 +75,9 @@ export default class ConversationModel {
         }
     }
 
-    checkLastReply(from_id){
+    checkLastReply(from_id) {
         return this.pageId === from_id;
     }
 
-    authentication() {
-        const conversation = this.converstation;
-        const tokenId = conversation.getUserTokenId();
-        if (tokenId) {
-            const message = {
-                action: 'auth',
-                payload: `${tokenId}`
-            }
-            this.send(message);
-        }
-
-    }
 
 }

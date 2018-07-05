@@ -1,7 +1,7 @@
 export default class MessagesModel {
 
-    constructor(mess) {
-        this.mess = mess;
+    constructor(appComponent) {
+        this.appComponent = appComponent;
         this.mine = null;
     }
 
@@ -13,11 +13,11 @@ export default class MessagesModel {
         const from_id = `${payload.from.id}`;
         const from_avatar = 'https://graph.facebook.com/' + from_id + '/picture?width=70&height=70';
         // const tags = `${payload.tags}`;
-        const to_name = (typeof payload.to!=='undefined')? `${payload.to.data[0].name}` : '';
-        const to_id = (typeof payload.to!=='undefined')? `${payload.to.data[0].id}` : '';
+        const to_name = (typeof payload.to !== 'undefined') ? `${payload.to.data[0].name}` : '';
+        const to_id = (typeof payload.to !== 'undefined') ? `${payload.to.data[0].id}` : '';
         const to_avatar = 'https://graph.facebook.com/' + to_id + '/picture?width=70&height=70';
         var attachment = null;
-        if(payload.attachments) {
+        if (payload.attachments) {
             attachment = payload.attachments;
         } else if (payload.attachment) {
             attachment = payload.attachment;
@@ -38,7 +38,7 @@ export default class MessagesModel {
             me: me,
         };
 
-        this.mess.addMess(id, message);
+        this.appComponent.addMess(id, message);
     }
 
     checkMe(from_id) {
@@ -58,21 +58,5 @@ export default class MessagesModel {
 
     }
 
-    authentication() {
-        const conversation = this.converstation;
-
-        const tokenId = conversation.getUserTokenId();
-
-        if (tokenId) {
-
-            const message = {
-                action: 'auth',
-                payload: `${tokenId}`
-            }
-
-            this.send(message);
-        }
-
-    }
 
 }
