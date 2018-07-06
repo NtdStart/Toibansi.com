@@ -5,7 +5,7 @@ import {apiUrlFb} from '../config/config'
 const pageId50k = '598135600563114';
 const limit = '15';
 
-const access_token = 'EAAc4hc2H1NcBALPPNg6SglaHD7ZArIdTZAvAundc7g8fGZCfS7URiVTHNU8L01bkHcwiRTWuRwNDEcXzlqIl47RZAZCSFzxgLu9PgzzTjx5CFvJLCcjopMJf6bcMH3PbGGPQWx7E86e3N5AZA7QmtIOTFmpHCcrWlZAL72JmIOwHCq89H0qTjnxejWy7fTUErfoeXRYi3QA6lg6c6SxpqLP3CqmPnOndZAoZD';
+const access_token = 'EAAc4hc2H1NcBACMJyTuw7BS1pC7sUNSojxr5DBZAbxJkiH263TDLTvfJNYVKZCSa8h3euv78LtpjBJslXBuSDih6HDLGsx6YdQvzkBnGJT2b9OhVcYS8LKWqkS9ZBNdIHWPAGNbAyBjt3b6ddYwetq6O1HJo4BC4n53Lf3DHShUoaAdl3FMZA9zZCY5QW1OAYRQp6ZAXHTKwZDZD';
 
 
 export default class FacebookAPI {

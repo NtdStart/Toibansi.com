@@ -1,4 +1,4 @@
-import {OrderedMap} from 'immutable'
+import {OrderedMap, Map, Set, List} from 'immutable'
 import HashMap from 'hashmap'
 import _ from 'lodash'
 import Service from '../services/service'
@@ -16,9 +16,8 @@ export default class ConversationController {
         this.callFacebookAPI = new FacebookAPI();
         this.activeChannelId = null;
         this.activeChannelType = null;
-
+        this.user = null;
         this.realtime = new Realtime(this);
-        this.messages = new OrderedMap();
         this.comments = new OrderedMap();
         this.comment = new CommentModel(this);
         this.message = new MessageModel(this);
@@ -28,8 +27,9 @@ export default class ConversationController {
         this.isLoading = false;
 
 
-        this.conversationsHashMap = new HashMap();
-        this.messagesHashMap = new HashMap();
+        this.conversationsMap = new Map();
+        this.messagesMap = new Map();
+        this.messages = new List();
         this.conversation = new ConversationModel(this);
         this.conversation.pageId = this.message.mine = this.pageId;
 
@@ -135,14 +135,9 @@ export default class ConversationController {
     }
 
     getActiveConversation() {
-        const conversation = this.conversationsHashMap.get(this.activeChannelId);
+        const conversation = this.conversationsMap.get(this.activeChannelId);
         return conversation;
     }
-
-    getActiveUser() {
-        return this.activeUserId;
-    }
-
 
     getActiveChannelId() {
         return this.activeChannelId;
@@ -263,13 +258,13 @@ export default class ConversationController {
     getMessagesFromConversation() {
         this.isLoading = true;
         let activeChannel = this.activeChannelId;
-        this.messages = this.messagesHashMap.get(activeChannel);
+        this.messages = this.messagesMap.get(activeChannel);
         if (undefined === this.messages) {
-            this.messages = new OrderedMap();
+            this.messages = new List();
         }
         let type = this.activeChannelType;
         if (null == activeChannel) {
-            return new OrderedMap();
+            return new List();
         } else {
             let req = (type === 'FBMessage') ? this.callFacebookAPI.getMessage(activeChannel, this.nextMessage, null) : this.callFacebookAPI.getReplyComment(activeChannel, this.nextMessage, null);
             req.then((response) => {
@@ -312,25 +307,25 @@ export default class ConversationController {
     }
 
     getMessages(activeChannel) {
-        return this.messagesHashMap.get(activeChannel);
+        return this.messagesMap.get(activeChannel);
     }
 
 
     addConversation(index, channel = {}) {
-        this.conversationsHashMap.set(index, channel);
+        this.conversationsMap = this.conversationsMap.set(`${index}`, channel);
     }
 
 
     addMess(index, mess = {}) {
-        this.messages = this.messages.set(`${index}`, mess);
+        this.messages = this.messages.push(mess);
     }
 
     addMessToMap(index, mess) {
-        this.messagesHashMap.set(`${index}`, mess);
+        this.messagesMap = this.messagesMap.set(`${index}`, mess);
     }
 
     getConversations() {
-        return this.conversationsHashMap.values();
+        return this.conversationsMap.valueSeq().toArray();
     }
 
     resetCursor() {

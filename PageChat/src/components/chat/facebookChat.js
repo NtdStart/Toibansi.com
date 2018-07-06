@@ -21,7 +21,6 @@ export default class FacebookChat extends Component {
             pageName: '50K',
             newMessage: ''
         }
-        this.messagesArray = new OrderedMap();
         this.firstPage = true;
         this._onResize = this._onResize.bind(this);
         this.handleSend = this.handleSend.bind(this);
@@ -130,8 +129,8 @@ export default class FacebookChat extends Component {
         const {facebookChat} = props;
 
         const messageId = new ObjectID().toString();
-        const currentUser = facebookChat.getCurrentUser();
         const channel = facebookChat.getActiveConversation();
+        const currentUser = channel.userFbId;
         const channelId = channel._id;
         const message = {
             _id: messageId,
@@ -156,6 +155,7 @@ export default class FacebookChat extends Component {
 
     componentDidUpdate() {
         // this.getDataMess();
+        console.log('Component Did Update Props!')
         if (this.firstPage)
             this.scrollMessagesToBottom();
     }
@@ -169,7 +169,7 @@ export default class FacebookChat extends Component {
     }
 
     componentDidMount() {
-        // console.log('Component DID MOUNT!')
+        console.log('Component DID MOUNT!')
         window.addEventListener('resize', this._onResize);
         // let {facebookChat} = this.props;
         // const socket = socketIOClient("http://127.0.0.1:3030");
@@ -177,7 +177,7 @@ export default class FacebookChat extends Component {
     }
 
     componentWillUnmount() {
-        // console.log('Component WILL MOUNT!')
+        console.log('Component WILL MOUNT!')
         window.removeEventListener('resize', this._onResize)
     }
 
@@ -248,13 +248,18 @@ export default class FacebookChat extends Component {
         const style = {
             height: height,
         };
-        const activeChannel = facebookChat.getActiveConversation();
-        const activeUserId = facebookChat.getActiveUser();
-        const activeChannelId = (activeChannel) ? activeChannel._id : '';
         const conversations = facebookChat.getConversations();
-        this.messagesArray = facebookChat.getMessages(activeChannelId);
-        if (this.messagesArray !== undefined)
-            this.messagesArray = this.messagesArray.sort((a, b) => a.created_time > b.created_time);
+        const activeChannel = facebookChat.getActiveConversation();
+        let activeUserId = '';
+        let activeChannelId = '';
+        let messagesArray = {};
+        if (undefined !== activeChannel) {
+            activeUserId = activeChannel.userFbId;
+            activeChannelId = (activeChannel) ? activeChannel._id : '';
+            messagesArray = facebookChat.getMessages(activeChannelId);
+        }
+        if (undefined === messagesArray)
+            messagesArray = new OrderedMap();
 
         // socket.on(facebookChat.pageId, (data) => {
         //     facebookChat.handleSocket(data)
@@ -392,7 +397,7 @@ export default class FacebookChat extends Component {
                         </div>
                         <div ref={(ref) => this.messagesRef = ref} onScroll={this.handleScrollMessage.bind(this)}
                              className="messages">
-                            {this.messagesArray !== undefined ? this.messagesArray.map((message, index) => {
+                            {messagesArray.size > 0 ? messagesArray.map((message, index) => {
                                 return (
                                     <div key={index} className={classNames('message', {'me': message.me})}>
                                         <div className="message-user-image">
