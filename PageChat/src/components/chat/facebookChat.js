@@ -170,7 +170,7 @@ export default class FacebookChat extends Component {
 
     componentWillReceiveProps(nextProps) {
         // console.log('Component Will Receive Props!')
-        const {facebookChat} = this.props;
+        const {facebookChat} = nextProps;
         this.getConversations(facebookChat);
         this.activeConversation(facebookChat);
         this.getMessage(facebookChat);
