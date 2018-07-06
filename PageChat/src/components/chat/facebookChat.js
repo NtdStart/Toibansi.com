@@ -15,6 +15,7 @@ export default class FacebookChat extends Component {
         new NavigationLeft(this);
         this.state = {
             height: window.innerHeight,
+            conversations: new List(),
             messagesArray: new List(),
             activeConversation: '',
             activeConversationId: '',
@@ -24,6 +25,7 @@ export default class FacebookChat extends Component {
             pageName: '50K',
             newMessage: ''
         }
+        this.update = false;
         this.firstPage = true;
         this._onResize = this._onResize.bind(this);
         this.handleSend = this.handleSend.bind(this);
@@ -169,8 +171,9 @@ export default class FacebookChat extends Component {
     componentWillReceiveProps(nextProps) {
         // console.log('Component Will Receive Props!')
         const {facebookChat} = this.props;
-        this.getMessage(facebookChat);
+        this.getConversations(facebookChat);
         this.activeConversation(facebookChat);
+        this.getMessage(facebookChat);
     }
 
     componentDidMount() {
@@ -256,6 +259,13 @@ export default class FacebookChat extends Component {
         }
     }
 
+    getConversations(facebookChat) {
+        const conversations = facebookChat.getConversations();
+        this.setState({
+            conversations: conversations
+        });
+    }
+
     activeConversation(facebookChat) {
         const activeConversation = facebookChat.getActiveConversation();
         if (undefined !== activeConversation) {
@@ -277,8 +287,6 @@ export default class FacebookChat extends Component {
         const style = {
             height: height,
         };
-        const conversations = facebookChat.getConversations();
-
 
         // socket.on(facebookChat.pageId, (data) => {
         //     facebookChat.handleSocket(data)
@@ -348,7 +356,7 @@ export default class FacebookChat extends Component {
                              onScroll={this.handleScroll.bind(this)}
                              ref={(scroll) => this.scroller = scroll}
                         >
-                            {conversations.map((conversation, key) => {
+                            {this.state.conversations.map((conversation, key) => {
                                 return (
                                     <div onClick={(key) => {
                                         facebookChat.setActiveConversation(conversation._id, conversation.type);

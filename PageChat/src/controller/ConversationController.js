@@ -362,7 +362,11 @@ export default class ConversationController {
     }
 
     getConversations() {
-        return this.conversationsMap.valueSeq().toArray();
+        let conversations = this.conversationsMap.valueSeq().toArray();
+        if (undefined !== conversations) {
+            conversations = conversations.sort((a, b) => b.unix_time > a.unix_time);
+        }
+        return conversations;
     }
 
     resetCursor() {

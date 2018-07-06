@@ -19,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="facebookChat.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="facebookChat.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="237" column="7" lean-forward="true" selection-start-line="237" selection-start-column="7" selection-end-line="237" selection-end-column="7" />
+            <state relative-caret-position="278">
+              <caret line="176" selection-start-line="176" selection-end-line="176" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -31,13 +31,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConversationController.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ConversationController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PageChat/src/controller/ConversationController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="278" selection-start-line="278" selection-end-line="278" />
+            <state relative-caret-position="685">
+              <caret line="383" selection-start-line="383" selection-end-line="383" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConversationModel.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PageChat/src/model/ConversationModel.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="34" column="25" selection-start-line="34" selection-start-column="16" selection-end-line="34" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#22#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -93,7 +105,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>facebookChat</find>
       <find>#navigation-left</find>
       <find>right</find>
       <find>me</find>
@@ -121,8 +132,9 @@
       <find>getCurre</find>
       <find>messagesRef</find>
       <find>nextMessage</find>
-      <find>this.messages</find>
       <find>activeChannel</find>
+      <find>facebookChat</find>
+      <find>this.messages</find>
     </findStrings>
     <replaceStrings>
       <replace>facebookChat</replace>
@@ -191,8 +203,8 @@
         <option value="$PROJECT_DIR$/PageChat/src/model/ConversationModel.js" />
         <option value="$PROJECT_DIR$/PageChat/src/model/MesagesModel.js" />
         <option value="$PROJECT_DIR$/PageChat/src/services/FacebookAPI.js" />
-        <option value="$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js" />
         <option value="$PROJECT_DIR$/PageChat/src/controller/ConversationController.js" />
+        <option value="$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js" />
       </list>
     </option>
   </component>
@@ -400,12 +412,12 @@
       <workItem from="1530703163772" duration="1971000" />
       <workItem from="1530709783485" duration="5475000" />
       <workItem from="1530784104111" duration="23526000" />
-      <workItem from="1530865531259" duration="13579000" />
+      <workItem from="1530865531259" duration="15191000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="175351000" />
+    <option name="totallyTimeSpent" value="176963000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -414,8 +426,8 @@
       <window_info content_ui="combo" id="Project" order="0" weight="0.21812434" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="12" sideWeight="0.50105375" side_tool="true" visible="true" weight="0.32924107" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49894625" visible="true" weight="0.32924107" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50105375" side_tool="true" weight="0.32924107" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49894625" weight="0.32924107" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -444,10 +456,10 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" sideWeight="0.49947312" visible="true" weight="0.32924107" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49894625" visible="true" weight="0.32924107" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32924107" />
-      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50052685" side_tool="true" weight="0.32924107" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50105375" side_tool="true" weight="0.32924107" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -693,30 +705,10 @@
     <entry file="file://$PROJECT_DIR$/PageChat/src/model/CommentModel.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/PageChat/src/model/ConversationModel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="39" column="37" lean-forward="true" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/node_modules/immutable/dist/immutable.js.flow">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="290">
           <caret line="408" column="14" selection-start-line="408" selection-start-column="14" selection-end-line="408" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PageChat/src/services/FacebookAPI.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -734,22 +726,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js">
+    <entry file="file://$PROJECT_DIR$/PageChat/src/model/ConversationModel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="237" column="7" lean-forward="true" selection-start-line="237" selection-start-column="7" selection-end-line="237" selection-end-column="7" />
+        <state relative-caret-position="578">
+          <caret line="34" column="25" selection-start-line="34" selection-start-column="16" selection-end-line="34" selection-end-column="25" />
           <folding>
-            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PageChat/src/services/FacebookAPI.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/controller/ConversationController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="278" selection-start-line="278" selection-end-line="278" />
+        <state relative-caret-position="685">
+          <caret line="383" selection-start-line="383" selection-end-line="383" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PageChat/src/components/chat/facebookChat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="176" selection-start-line="176" selection-end-line="176" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
