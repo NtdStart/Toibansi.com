@@ -1,5 +1,4 @@
-import {OrderedMap, Map, Set, List} from 'immutable'
-import HashMap from 'hashmap'
+import {OrderedMap, Map, List} from 'immutable'
 import _ from 'lodash'
 import Service from '../services/service'
 import FacebookAPI from '../services/FacebookAPI'

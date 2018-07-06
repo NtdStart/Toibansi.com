@@ -39,8 +39,8 @@
       <file leaf-file-name="ConversationController.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PageChat/src/controller/ConversationController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="31" column="35" lean-forward="true" selection-start-line="31" selection-start-column="35" selection-end-line="31" selection-end-column="35" />
+            <state relative-caret-position="100">
+              <caret line="273" column="61" lean-forward="true" selection-start-line="273" selection-start-column="61" selection-end-line="273" selection-end-column="61" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
               </folding>
@@ -387,12 +387,12 @@
       <workItem from="1530703163772" duration="1971000" />
       <workItem from="1530709783485" duration="5475000" />
       <workItem from="1530784104111" duration="23526000" />
-      <workItem from="1530865531259" duration="4378000" />
+      <workItem from="1530865531259" duration="4684000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="166150000" />
+    <option name="totallyTimeSpent" value="166456000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -727,8 +727,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PageChat/src/controller/ConversationController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="35" lean-forward="true" selection-start-line="31" selection-start-column="35" selection-end-line="31" selection-end-column="35" />
+        <state relative-caret-position="100">
+          <caret line="273" column="61" lean-forward="true" selection-start-line="273" selection-start-column="61" selection-end-line="273" selection-end-column="61" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
           </folding>
