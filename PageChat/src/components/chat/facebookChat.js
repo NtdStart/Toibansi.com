@@ -4,7 +4,7 @@ import _ from 'lodash'
 import {ObjectID} from '../../helpers/objectid'
 import ChatBoxRight from './chatBoxRight'
 import NavigationLeft from './navigationLeft'
-import {OrderedMap} from "immutable";
+import {List} from "immutable";
 
 
 export default class FacebookChat extends Component {
@@ -15,7 +15,10 @@ export default class FacebookChat extends Component {
         new NavigationLeft(this);
         this.state = {
             height: window.innerHeight,
-            messagesArray: {},
+            messagesArray: new List(),
+            activeConversation: '',
+            activeConversationId: '',
+            activeUserFbId: '',
             activeTab: 1,
             pageId: '598135600563114',
             pageName: '50K',
@@ -154,8 +157,7 @@ export default class FacebookChat extends Component {
     }
 
     componentDidUpdate() {
-        // this.getDataMess();
-        console.log('Component Did Update Props!')
+        // console.log('Component Did Update Props!')
         if (this.firstPage)
             this.scrollMessagesToBottom();
     }
@@ -165,11 +167,14 @@ export default class FacebookChat extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        console.log('Component Will Receive Props!')
+        // console.log('Component Will Receive Props!')
+        const {facebookChat} = this.props;
+        this.getMessage(facebookChat);
+        this.activeConversation(facebookChat);
     }
 
     componentDidMount() {
-        console.log('Component DID MOUNT!')
+        // console.log('Component DID MOUNT!')
         window.addEventListener('resize', this._onResize);
         // let {facebookChat} = this.props;
         // const socket = socketIOClient("http://127.0.0.1:3030");
@@ -177,7 +182,7 @@ export default class FacebookChat extends Component {
     }
 
     componentWillUnmount() {
-        console.log('Component WILL MOUNT!')
+        // console.log('Component WILL MOUNT!')
         window.removeEventListener('resize', this._onResize)
     }
 
@@ -210,7 +215,7 @@ export default class FacebookChat extends Component {
         this.firstPage = false;
         let {scrollTop} = this.messagesRef;
         if (scrollTop < 50 && !facebookChat.isLoading && facebookChat.nextMessage !== null) {
-            facebookChat.getMessagesFromConversation();
+            facebookChat.scrollGetMessage();
         }
     }
 
@@ -221,7 +226,7 @@ export default class FacebookChat extends Component {
         facebookChat.resetCursor();
         switch (type) {
             case 1:
-                // facebookChat.fetchConversationAndComment();
+                facebookChat.fetchConversationAndComment();
                 break;
             case 2:
                 facebookChat.fetchConversations();
@@ -240,6 +245,30 @@ export default class FacebookChat extends Component {
         this.setState({activeTab: type})
     }
 
+    getMessage(facebookChat) {
+        const activeConversation = facebookChat.getActiveConversation();
+        if (undefined !== activeConversation) {
+            let messagesArray = facebookChat.getMessages(activeConversation._id);
+            this.setState({
+                messagesArray: messagesArray
+            });
+
+        }
+    }
+
+    activeConversation(facebookChat) {
+        const activeConversation = facebookChat.getActiveConversation();
+        if (undefined !== activeConversation) {
+            const activeConversationId = activeConversation._id;
+            const activeUserFbId = activeConversation.userFbId;
+            this.setState({
+                activeConversation: activeConversation,
+                activeConversationId: activeConversationId,
+                activeUserFbId: activeUserFbId
+            });
+        }
+    }
+
 
     render() {
         // const socket = socketIOClient("http://127.0.0.1:3030");
@@ -249,17 +278,7 @@ export default class FacebookChat extends Component {
             height: height,
         };
         const conversations = facebookChat.getConversations();
-        const activeChannel = facebookChat.getActiveConversation();
-        let activeUserId = '';
-        let activeChannelId = '';
-        let messagesArray = {};
-        if (undefined !== activeChannel) {
-            activeUserId = activeChannel.userFbId;
-            activeChannelId = (activeChannel) ? activeChannel._id : '';
-            messagesArray = facebookChat.getMessages(activeChannelId);
-        }
-        if (undefined === messagesArray)
-            messagesArray = new OrderedMap();
+
 
         // socket.on(facebookChat.pageId, (data) => {
         //     facebookChat.handleSocket(data)
@@ -334,7 +353,7 @@ export default class FacebookChat extends Component {
                                     <div onClick={(key) => {
                                         facebookChat.setActiveConversation(conversation._id, conversation.type);
                                     }} key={conversation._id}
-                                         className={classNames('conversation', {'unread': conversation.unread > 0}, {'notify': _.get(conversation, 'notify') === true}, {'active': conversation._id === activeChannelId})}>
+                                         className={classNames('conversation', {'unread': conversation.unread > 0}, {'notify': _.get(conversation, 'notify') === true}, {'active': conversation._id === this.state.activeConversationId})}>
                                         <div className="user-image">
                                             {this.renderAvatars(conversation)}
                                         </div>
@@ -386,10 +405,10 @@ export default class FacebookChat extends Component {
                     <div className="chat-messages">
                         <div className="conversation-header">
                             <div className="name-conversation">
-                                {this.renderTitle(activeChannel)}
+                                {this.renderTitle(this.state.activeConversation)}
                             </div>
                             <div className="view-profile-fb">
-                                {this.renderViewOnFb(activeUserId)}
+                                {this.renderViewOnFb(this.state.activeUserFbId)}
                             </div>
                         </div>
                         <div className="conversation-tags">
@@ -397,7 +416,7 @@ export default class FacebookChat extends Component {
                         </div>
                         <div ref={(ref) => this.messagesRef = ref} onScroll={this.handleScrollMessage.bind(this)}
                              className="messages">
-                            {messagesArray.size > 0 ? messagesArray.map((message, index) => {
+                            {this.state.messagesArray.map((message, index) => {
                                 return (
                                     <div key={index} className={classNames('message', {'me': message.me})}>
                                         <div className="message-user-image">
@@ -406,7 +425,7 @@ export default class FacebookChat extends Component {
                                         {this.renderMessage(message)}
                                     </div>
                                 )
-                            }) : null}
+                            })}
                         </div>
                         {<div className="messenger-input">
                             <div className="facebook tags">

@@ -124,13 +124,9 @@ export default class ConversationController {
     setActiveConversation(id, type) {
         if (this.activeChannelId === id) return false;
         this.activeChannelId = id;
-        const conversation = this.getActiveConversation();
-        this.activeUserId = conversation.userFbId;
         this.activeChannelType = type;
         this.resetCursor();
         this.getMessagesFromConversation();
-        this.update();
-        // console.log("ActiveConversation Id ", id);
     }
 
     getActiveConversation() {
@@ -254,7 +250,7 @@ export default class ConversationController {
         }
     }
 
-    getMessagesFromConversation() {
+    scrollGetMessage() {
         this.isLoading = true;
         let activeChannel = this.activeChannelId;
         this.messages = this.messagesMap.get(activeChannel);
@@ -262,7 +258,7 @@ export default class ConversationController {
             this.messages = new List();
         }
         let type = this.activeChannelType;
-        if (null == activeChannel) {
+        if (null === activeChannel) {
             return new List();
         } else {
             let req = (type === 'FBMessage') ? this.callFacebookAPI.getMessage(activeChannel, this.nextMessage, null) : this.callFacebookAPI.getReplyComment(activeChannel, this.nextMessage, null);
@@ -273,10 +269,42 @@ export default class ConversationController {
                 } else if (response.data.comment_count > 0) {
                     this.nextMessage = (response.data.comments.paging.next) ? response.data.comments.paging.cursors.after : null;
                 }
-                let messages = [];
+                let messagesList = response.data.data;
+                _.each(messagesList, (mess) => {
+                    this.message.onAdd(mess, type);
+                });
+                if (undefined !== this.messages && this.messages.size > 0) {
+                    this.addMsgToMap(activeChannel, this.messages);
+                    this.update();
+                }
+                return new List();
+            }).catch((err) => {
+                console.log("An error fetching user conversations", err);
+            })
+        }
+    }
+
+    getMessagesFromConversation() {
+        this.isLoading = true;
+        let activeChannel = this.activeChannelId;
+        this.messages = new List();
+        this.messagesMap = this.messagesMap.delete(activeChannel);
+        let type = this.activeChannelType;
+        if (null === activeChannel) {
+            return new List();
+        } else {
+            let req = (type === 'FBMessage') ? this.callFacebookAPI.getMessage(activeChannel, this.nextMessage, null) : this.callFacebookAPI.getReplyComment(activeChannel, this.nextMessage, null);
+            req.then((response) => {
+                this.isLoading = false;
+                if (type === 'FBMessage') {
+                    this.nextMessage = (response.data.paging.next) ? response.data.paging.cursors.after : null;
+                } else if (response.data.comment_count > 0) {
+                    this.nextMessage = (response.data.comments.paging.next) ? response.data.comments.paging.cursors.after : null;
+                }
+                let messagesList = [];
                 if (type === 'FBComment') {
                     const res = response.data;
-                    messages = (res.comment_count > 0) ? response.data.comments.data : [];
+                    messagesList = (res.comment_count > 0) ? response.data.comments.data : [];
                     let item = {
                         id: res.id,
                         created_time: res.created_time,
@@ -289,16 +317,18 @@ export default class ConversationController {
                             media: res.attachment.media
                         }
                     }
-                    messages.push(item)
+                    messagesList.push(item)
                 } else {
-                    messages = response.data.data;
+                    messagesList = response.data.data;
                 }
-                _.each(messages, (mess) => {
+                _.each(messagesList, (mess) => {
                     this.message.onAdd(mess, type);
                 });
-                this.addMessToMap(activeChannel, this.messages);
-                this.update();
-                return this.getMessages();
+                if (undefined !== this.messages && this.messages.size > 0) {
+                    this.addMsgToMap(activeChannel, this.messages);
+                    this.update();
+                }
+                return new List();
             }).catch((err) => {
                 console.log("An error fetching user conversations", err);
             })
@@ -306,21 +336,29 @@ export default class ConversationController {
     }
 
     getMessages(activeChannel) {
-        return this.messagesMap.get(activeChannel);
+        this.messages = this.messagesMap.get(activeChannel);
+        if (undefined !== this.messages) {
+            this.messages = this.messages.sort((a, b) => a.created_time > b.created_time);
+            return this.messages.valueSeq().toArray();
+        }
+        return new List();
     }
 
 
     addConversation(index, channel = {}) {
-        this.conversationsMap = this.conversationsMap.set(`${index}`, channel);
+        this.conversationsMap = this.conversationsMap.set(index, channel);
     }
 
 
-    addMess(index, mess = {}) {
+    addMess(index, mess) {
+        if (undefined === this.messages) {
+            this.messages = new List();
+        }
         this.messages = this.messages.push(mess);
     }
 
-    addMessToMap(index, mess) {
-        this.messagesMap = this.messagesMap.set(`${index}`, mess);
+    addMsgToMap(index, mess) {
+        this.messagesMap = this.messagesMap.set(index, mess);
     }
 
     getConversations() {
@@ -335,7 +373,7 @@ export default class ConversationController {
     resetChannel() {
         this.activeChannelId = null;
         this.activeChannelType = null;
-        this.messages = new OrderedMap();
+        this.messages = new List();
     }
 
     update() {
