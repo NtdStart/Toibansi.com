@@ -21,7 +21,7 @@ export default class ConversationModel {
 
             senders = `${payload.senders.data[0].name}`;
             userFbId = `${payload.senders.data[0].id}`;
-            updated_time = `${payload.updated_time}`;
+            updated_time = payload.updated_time;
             unread = `${payload.unread_count}`;
             avatar = 'https://graph.facebook.com/' + userFbId + '/picture?width=70&height=70';
             let conversation = {

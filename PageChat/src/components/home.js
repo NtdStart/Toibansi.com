@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import  Service  from '../services/service'
+import React, {Component} from 'react'
+import Service from '../services/service'
+
 export default class Home extends Component {
 
     constructor(props) {
@@ -21,8 +22,9 @@ export default class Home extends Component {
             height: window.innerHeight
         });
     }
+
     _loginClick = event => {
-        event.preventDefault()
+        event.preventDefault();
         const data = {
             email: this.state.email,
             pass: this.state.password
@@ -40,14 +42,17 @@ export default class Home extends Component {
             [event.target.id]: event.target.value
         });
     }
+
     render() {
         return (
             <div className="wrapper">
                 <div className="container">
                     <h1>Welcome</h1>
                     <form className="form">
-                        <input id="email" type="text" placeholder="Username" value={this.state.email} onChange={this._handleChange} />
-                        <input id="password" type="password" placeholder="Password" value={this.state.password} onChange={this._handleChange} />
+                        <input id="email" type="text" placeholder="Username" value={this.state.email}
+                               onChange={this._handleChange}/>
+                        <input id="password" type="password" placeholder="Password" value={this.state.password}
+                               onChange={this._handleChange}/>
                         <a onClick={this._loginClick} className="btn-login btn btn-info" id="login-button">Login </a>
                     </form>
                 </div>
