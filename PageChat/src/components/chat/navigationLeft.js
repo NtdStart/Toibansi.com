@@ -47,7 +47,6 @@ export default class navigationLeft extends Component {
         return <img className="img-circle" src={url} alt={this.state.pageName}/>
     }
 
-
     render() {
         return (
             <nav id="navigation-left">
@@ -70,9 +69,11 @@ export default class navigationLeft extends Component {
                     </div>
                     <div className="collapse-right">
                     </div>
+
                     <div id="logout">
-                        <a href="/">Thoát</a>
+                        <a  href="/">Thoát</a>
                     </div>
+
                     <div className="clearfix"/>
                 </ul>
             </nav>

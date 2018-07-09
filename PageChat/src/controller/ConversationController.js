@@ -250,7 +250,7 @@ export default class ConversationController {
         }
     }
 
-    scrollGetMessage() {
+    getMoreMessages() {
         this.isLoading = true;
         let activeChannel = this.activeChannelId;
         this.messages = this.messagesMap.get(activeChannel);
@@ -337,21 +337,7 @@ export default class ConversationController {
 
     getMessages(activeChannel) {
         let messages = this.messagesMap.get(activeChannel);
-        if (undefined !== messages) {
-            messages.sort((a, b) => {
-                if (a.created_time < b.created_time) {
-                    return -1;
-                }
-                if (a.created_time > b.created_time) {
-                    return 1;
-                }
-                if (a === b) {
-                    return 0;
-                }
-            });
-            return messages;
-        }
-        return new List();
+        return messages;
     }
 
 
@@ -373,19 +359,6 @@ export default class ConversationController {
 
     getConversations() {
         let conversations = this.conversationsMap.valueSeq().toArray();
-        if (undefined !== conversations) {
-            conversations.sort((a, b) => {
-                if (a.unix_time > b.unix_time) {
-                    return -1;
-                }
-                if (a.unix_time < b.unix_time) {
-                    return 1;
-                }
-                if (a === b) {
-                    return 0;
-                }
-            });
-        }
         return conversations;
     }
 

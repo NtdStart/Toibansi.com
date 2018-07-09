@@ -7,7 +7,7 @@ export default class MessagesModel {
 
     onAdd(payload, type) {
         const id = `${payload.id}`;
-        const created_time = `${payload.created_time}`;
+        const created_time = payload.created_time;
         const mess = `${payload.message}`;
         const from_name = `${payload.from.name}`;
         const from_id = `${payload.from.id}`;

@@ -89,6 +89,7 @@
 .app-messenger .chat .chat-left {
     width: 365px;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
+    background: #fff;
 }
 
 .app-messenger .chat .chat-right {
