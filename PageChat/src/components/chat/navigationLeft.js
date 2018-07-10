@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import UserFacebook from '../user/userFacebook'
 
 export default class navigationLeft extends Component {
 
@@ -47,6 +48,8 @@ export default class navigationLeft extends Component {
         return <img className="img-circle" src={url} alt={this.state.pageName}/>
     }
 
+
+
     render() {
         return (
             <nav id="navigation-left">
@@ -69,11 +72,7 @@ export default class navigationLeft extends Component {
                     </div>
                     <div className="collapse-right">
                     </div>
-
-                    <div id="logout">
-                        <a  href="/">Thoát</a>
-                    </div>
-
+                    <UserFacebook />
                     <div className="clearfix"/>
                 </ul>
             </nav>

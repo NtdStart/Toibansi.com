@@ -51,7 +51,7 @@ export default class Home extends Component {
     responseFacebook = (response) => {
         console.log(response);
         if (response.id !== undefined){
-            // this.props.history.push("/chat");
+            this.props.history.push("/chat");
         }
     };
 
@@ -69,7 +69,7 @@ export default class Home extends Component {
                         <p className="login-fb-text"> Hoặc </p>
                         <FacebookLogin
                             appId="2032472167011543"
-                            autoLoad={true}
+                            autoLoad={false}
                             fields="name,email,picture"
                             onClick={this.loginFacebookClicked}
                             callback={this.responseFacebook}
