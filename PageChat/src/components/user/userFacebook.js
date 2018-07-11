@@ -32,7 +32,6 @@ export default class userFacebook extends Component {
     componentDidMount() {
         // console.log('Component DID MOUNT!')
         window.addEventListener('resize', this._onResize);
-        this.getLoginStatus()
     }
 
     componentWillUnmount() {
@@ -48,17 +47,9 @@ export default class userFacebook extends Component {
 
 
 
-
-
     logout() {
         window.FB.logout(function (response) {
             // user is logged out
-        });
-    }
-
-    getLoginStatus() {
-        window.FB.api('/me', function(response) {
-            console.log(response);
         });
     }
 

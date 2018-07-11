@@ -33,7 +33,7 @@ export default class ConversationController {
         this.conversation.pageId = this.message.mine = this.pageId;
 
 
-        this.fetchConversationAndComment();
+        // this.fetchConversationAndComment();
     }
 
     isConnected() {
@@ -167,34 +167,37 @@ export default class ConversationController {
         if (channelId) {
             let message_send = _.get(message, 'body');
             this.callFacebookAPI.sendMessage(channelId, message_send, null).then((response) => {
-                this.callFacebookAPI.getMessageById(response.data.id, null).then((res) => {
-                    let newMessage = _.get(res, 'data');
+                    this.callFacebookAPI.getMessageById(response.data.id, null).then((res) => {
+                        let newMessage = _.get(res, 'data');
 
-                    this.message.onAdd(newMessage, 'inbox');
+                        this.message.onAdd(newMessage, 'inbox');
+                        this.addMsgToMap(this.activeChannelId, this.messages);
 
-                    let currentChannel = this.conversations.get(this.activeChannelId);
+                        let currentConversation = this.conversationsMap.get(this.activeChannelId);
 
-                    let conversation = {
-                        id: this.activeChannelId,
-                        can_reply: currentChannel.can_reply,
-                        snippet: message.message,
-                        updated_time: new Date().getTime() / 1000,
-                        unread_count: currentChannel.unread + 1,
-                        last_reply: true,
-                        senders: {
-                            data: [
-                                {
-                                    name: currentChannel.senders,
-                                    id: currentChannel.userFbId
-                                }
-                            ]
+                        let conversation = {
+                            id: this.activeChannelId,
+                            can_reply: currentConversation.can_reply,
+                            snippet: message.message,
+                            updated_time: new Date().getTime() / 1000,
+                            unread_count: currentConversation.unread + 1,
+                            last_reply: true,
+                            senders: {
+                                data: [
+                                    {
+                                        name: currentConversation.senders,
+                                        id: currentConversation.userFbId
+                                    }
+                                ]
+                            }
                         }
-                    }
-                    this.conversation.onAdd(conversation, 'inbox');
-                }).catch((err) => {
-                    console.log("An error fetching message", err);
-                })
-            }).catch((err) => {
+                        this.conversation.onAdd(conversation, 'inbox');
+                        this.update();
+                    }).catch((err) => {
+                        console.log("An error fetching message", err);
+                    })
+                }
+            ).catch((err) => {
                 console.log("An error sending message", err);
             })
         }

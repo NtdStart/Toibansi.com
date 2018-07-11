@@ -38,6 +38,11 @@ export default class Home extends Component {
                 }
             })
     }
+
+    componentDidMount() {
+        // console.log('Component DID MOUNT!')
+    }
+
     _handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
@@ -50,7 +55,7 @@ export default class Home extends Component {
 
     responseFacebook = (response) => {
         console.log(response);
-        if (response.id !== undefined){
+        if (response.id !== undefined) {
             this.props.history.push("/chat");
         }
     };

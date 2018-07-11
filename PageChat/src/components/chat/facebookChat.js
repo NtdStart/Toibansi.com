@@ -7,7 +7,6 @@ import NavigationLeft from './navigationLeft'
 import {List} from "immutable";
 
 
-
 export default class FacebookChat extends Component {
 
     constructor(props) {
@@ -170,7 +169,7 @@ export default class FacebookChat extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        // console.log('Component Will Receive Props!')
+        console.log('Component Will Receive Props!')
         const {facebookChat} = nextProps;
         this.getConversations(facebookChat);
         this.activeConversation(facebookChat);
@@ -253,7 +252,7 @@ export default class FacebookChat extends Component {
         const activeConversation = facebookChat.getActiveConversation();
         if (undefined !== activeConversation) {
             let messagesArray = facebookChat.getMessages(activeConversation._id);
-            messagesArray.sort((a, b) => {
+            messagesArray = messagesArray.sort((a, b) => {
                 if (a.created_time < b.created_time) {
                     return -1;
                 }
@@ -273,8 +272,8 @@ export default class FacebookChat extends Component {
     }
 
     getConversations(facebookChat) {
-        const conversations = facebookChat.getConversations();
-        conversations.sort((a, b) => {
+        let conversations = facebookChat.getConversations();
+        conversations = conversations.sort((a, b) => {
             if (a.unix_time > b.unix_time) {
                 return -1;
             }
@@ -384,7 +383,6 @@ export default class FacebookChat extends Component {
                             {this.state.conversations.map((conversation, key) => {
                                 return (
                                     <div onClick={(key) => {
-                                        this.scrollMessagesToBottom();
                                         facebookChat.setActiveConversation(conversation._id, conversation.type);
                                     }} key={conversation._id}
                                          className={classNames('conversation', {'unread': conversation.unread > 0}, {'notify': _.get(conversation, 'notify') === true}, {'active': conversation._id === this.state.activeConversationId})}>
