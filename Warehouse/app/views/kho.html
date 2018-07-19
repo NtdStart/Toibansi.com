@@ -1,0 +1,241 @@
+<html>
+<head>
+    <title>Toibansi.com - Dashboard Template</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/admin/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/admin/vendor/linearicons/style.css">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="/admin/css/main.css">
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" href="/admin/css/demo.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" href="/admin/img/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/admin/img/favicon.png">
+
+</head>
+
+<body>
+<!-- WRAPPER -->
+<div class="header" style="height: 60px;">
+
+</div>
+<div id="wrapper">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="row table-render">
+                <div style="text-align: center; font-weight: bold"> KHO</div>
+                <div style="text-align: center; font-weight: bold">Size : M</div>
+                <div class="render-table-header-tracking">
+                    <div class="text-header col-md-6">
+                        <label> Mã sp </label>
+                    </div>
+                    <div class="text-header col-md-3">
+                        <label> 136 </label>
+                    </div>
+                    <div class="text-header col-md-3">
+                        <label> 269 </label>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div id="kho136-M" class="kho">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row table-render">
+                <div style="text-align: center; font-weight: bold"> KHO</div>
+                <div style="text-align: center; font-weight: bold">Size : L</div>
+                <div class="render-table-header-tracking">
+                    <div class="text-header col-md-6">
+                        <label> Mã sp </label>
+                    </div>
+                    <div class="text-header col-md-3">
+                        <label> 136 </label>
+                    </div>
+                    <div class="text-header col-md-3">
+                        <label> 269 </label>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div id="kho136-L" class="kho">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row table-render">
+                <div style="text-align: center; font-weight: bold"> KHO</div>
+                <div style="text-align: center; font-weight: bold">Size : XL</div>
+                <div class="render-table-header-tracking">
+                    <div class="text-header col-md-6">
+                        <label> Mã sp </label>
+                    </div>
+                    <div class="text-header col-md-3">
+                        <label> 136 </label>
+                    </div>
+                    <div class="text-header col-md-3">
+                        <label> 269 </label>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div id="kho136-XL" class="kho">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row table-render">
+                <div style="text-align: center; font-weight: bold"> KHO</div>
+                <div style="text-align: center; font-weight: bold">Size : XXL</div>
+                <div class="render-table-header-tracking">
+                    <div class="text-header col-md-6">
+                        <label> Mã sp </label>
+                    </div>
+                    <div class="text-header col-md-3">
+                        <label> 136 </label>
+                    </div>
+                    <div class="text-header col-md-3">
+                        <label> 269 </label>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div id="kho136-XXL" class="kho">
+
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<!-- END WRAPPER -->
+<!-- Javascript -->
+<script src="/admin/vendor/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        loadDataTracking();
+    });
+
+    var countM = 1, countL = 1, countXL = 1, countXXL = 1;
+
+    function loadDataTracking() {
+        $.ajax({
+            url: "/sync/products", // gửi ajax đến file result.php
+            type: "get", // chọn phương thức gửi là get
+            dateType: "json", // dữ liệu trả về dạng text
+            success: function (result) {
+                $.each(result, function (key, value) {
+                    if (value.size === 'M')
+                        addItemM(value, 'kho136-M');
+                    if (value.size === 'L')
+                        addItemL(value, 'kho136-L');
+                    if (value.size === 'XL')
+                        addItemXL(value, 'kho136-XL');
+                    if (value.size === 'XXL')
+                        addItemXXL(value, 'kho136-XXL');
+                });
+            }
+        });
+    }
+
+
+    function syncWarehouse(id, size) {
+        $.ajax({
+            url: "/sync/warehouse/" + id + "/" + size, // gửi ajax đến file result.php
+            type: "get", // chọn phương thức gửi là get
+            dateType: "json", // dữ liệu trả về dạng text
+            success: function (result) {
+                if (result < 10) {
+                    $('#' + id + '-' + size).css('color', 'red');
+                }
+                $('#' + id + '-' + size).html(result);
+            }
+        });
+    }
+
+    function addItemM(item, kho) {
+        countM++;
+        var html;
+        if (countM % 2) {
+            html = '<div class="render-table-item">';
+        } else {
+            html = '<div class="render-table-item odd">';
+        }
+        syncWarehouse(item.id, item.size);
+        html = html +
+            '<div class="text-header col-md-6"><span>' + item.id + ' </span></div>' +
+            '<div class="text-header col-md-3"><span style="color:red">' + item.inventory_quantity + ' </span></div>' +
+            '<div class="text-header col-md-3"><span id="' + item.id + '-' + item.size + '"> </span></div>' +
+            '<div class="clearfix"></div>' +
+            '<div>';
+        $('#' + kho).prepend(html);
+    }
+
+    function addItemL(item, kho) {
+        countL++;
+        var html;
+        if (countL % 2) {
+            html = '<div class="render-table-item">';
+        } else {
+            html = '<div class="render-table-item odd">';
+        }
+        syncWarehouse(item.id, item.size);
+        html = html +
+            '<div class="text-header col-md-6"><span>' + item.id + ' </span></div>' +
+            '<div class="text-header col-md-3"><span style="color:red">' + item.inventory_quantity + ' </span></div>' +
+            '<div class="text-header col-md-3"><span id="' + item.id + '-' + item.size + '"> </span></div>' +
+            '<div class="clearfix"></div>' +
+            '<div>';
+        $('#' + kho).prepend(html);
+    }
+
+    function addItemXL(item, kho) {
+        countXL++;
+        var html;
+        if (countXL % 2) {
+            html = '<div class="render-table-item">';
+        } else {
+            html = '<div class="render-table-item odd">';
+        }
+        syncWarehouse(item.id, item.size);
+        html = html +
+            '<div class="text-header col-md-6"><span>' + item.id + ' </span></div>' +
+            '<div class="text-header col-md-3"><span class="alert-soldOut">' + item.inventory_quantity + ' </span></div>' +
+            '<div class="text-header col-md-3"><span id="' + item.id + '-' + item.size + '"></span></div>' +
+            '<div class="clearfix"></div>' +
+            '<div>';
+        $('#' + kho).prepend(html);
+    }
+
+    function addItemXXL(item, kho) {
+        countXXL++;
+        var html;
+        if (countXXL % 2) {
+            html = '<div class="render-table-item">';
+        } else {
+            html = '<div class="render-table-item odd">';
+        }
+        syncWarehouse(item.id, item.size);
+        html = html +
+            '<div class="text-header col-md-6"><span>' + item.id + ' </span></div>' +
+            '<div class="text-header col-md-3"><span style="color:red">' + item.inventory_quantity + ' </span></div>' +
+            '<div class="text-header col-md-3"><span id="' + item.id + '-' + item.size + '"> </span></div>' +
+            '<div class="clearfix"></div>' +
+            '<div>';
+        $('#' + kho).prepend(html);
+    }
+
+
+</script>
+</body>
+</html>

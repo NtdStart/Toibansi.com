@@ -1,6 +1,6 @@
 {
   "name": "Fanpage-Integrate",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
     "axios": "^0.17.1",
@@ -30,7 +30,7 @@
     "unicode": "^9.0.1",
     "url-loader": "^0.6.2",
     "react-facebook-login": "4.0.1",
-    "ws": "^5.2.0"
+    "winston": "^2.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

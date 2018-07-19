@@ -13,6 +13,8 @@ export default class FacebookChat extends Component {
         super(props);
         new ChatBoxRight(this);
         new NavigationLeft(this);
+
+
         this.state = {
             height: window.innerHeight,
             conversations: new List(),
@@ -102,8 +104,8 @@ export default class FacebookChat extends Component {
         // create new message
         if (_.trim(newMessage).length) {
             const messageId = new ObjectID().toString();
-            const channel = facebookChat.getActiveConversation();
-            const channelId = channel._id;
+            const activeConversation = facebookChat.getActiveConversation();
+            const conversationId = activeConversation._id;
             const message = {
                 _id: messageId,
                 created_time: new Date().getTime() / 1000,
@@ -117,10 +119,11 @@ export default class FacebookChat extends Component {
                 me: true,
             };
 
-            if (channelId.charAt(0) === 't') {
-                facebookChat.sendMessage(messageId, message);
+            if (conversationId.charAt(0) === 't') {
+                facebookChat.sendMessage(conversationId, message);
+                this.scrollMessagesToBottom();
             } else {
-                facebookChat.postComment(messageId, message);
+                facebookChat.postComment(conversationId, message);
             }
 
             this.setState({
@@ -128,6 +131,7 @@ export default class FacebookChat extends Component {
             })
         }
     }
+
 
     sendPhoto(event, props) {
         const file = event.target.files[0];
@@ -169,7 +173,7 @@ export default class FacebookChat extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        console.log('Component Will Receive Props!')
+        // console.log('Component Will Receive Props!')
         const {facebookChat} = nextProps;
         this.getConversations(facebookChat);
         this.activeConversation(facebookChat);
@@ -179,9 +183,6 @@ export default class FacebookChat extends Component {
     componentDidMount() {
         // console.log('Component DID MOUNT!')
         window.addEventListener('resize', this._onResize);
-        // let {facebookChat} = this.props;
-        // const socket = socketIOClient("http://127.0.0.1:3030");
-        // socket.emit('subscribe', {pageId: facebookChat.pageId})
     }
 
     componentWillUnmount() {
@@ -305,16 +306,11 @@ export default class FacebookChat extends Component {
 
 
     render() {
-        // const socket = socketIOClient("http://127.0.0.1:3030");
         const {facebookChat} = this.props;
         const {height, activeTab} = this.state;
         const style = {
             height: height,
         };
-
-        // socket.on(facebookChat.pageId, (data) => {
-        //     facebookChat.handleSocket(data)
-        // })
 
         function renderIcon(reply) {
             if (reply) {
